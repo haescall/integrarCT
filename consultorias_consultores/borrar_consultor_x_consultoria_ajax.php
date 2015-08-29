@@ -25,6 +25,8 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 //echo 'El id es : ' . $_GET['id_consultoria'];
 //echo $lista;
 
+//Esta es una prueba git
+
 echo json_encode($crud_consultoria_consultores->deleteConsultor($_GET['consultor_id']));
 exit();
 

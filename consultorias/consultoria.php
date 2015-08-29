@@ -73,7 +73,7 @@ include_once '../config/dbconfig.php';
                         <th>ID</th>
                         <th>Nombres</th>
                         <th>Cargo</th>
-                        <th>Asignado</th>
+                        <th>Acción</th>
                     </tr>
                     <tbody id="consultores">
                     </tbody>

@@ -1,6 +1,6 @@
 <?php
 
-class crud_consultoria {
+class crud_consultoria_consultores {
 
     private $db;
 
@@ -81,9 +81,9 @@ class crud_consultoria {
         }
     }
 
-    public function delete($id) {
-        $stmt = $this->db->prepare("DELETE FROM consultoria WHERE id=:id");
-        $stmt->bindparam(":id", $id);
+    public function deleteConsultor($idConsultor) {
+        $stmt = $this->db->prepare("DELETE FROM consultoria_consultores WHERE codigo_consultor=:idConsultor");
+        $stmt->bindparam(":idConsultor", $idConsultor);
         $stmt->execute();
         return true;
     }
@@ -117,7 +117,7 @@ class crud_consultoria {
                     <td align="center">
                         <a href="#" class="dlg_consultores_consultorias"
                            data-target="#consul" data-toggle="modal" 
-                           data-id="<?php print($row['id']); ?>"  title="Asignar Consultores">
+                           data-id="<?php print($row['id']); ?>"  title="Asignar Consultor">
                             <i class="glyphicon glyphicon-user"></i></a>
                     </td>
                 </tr>
@@ -178,21 +178,18 @@ class crud_consultoria {
         }
     }
 
-    /* paging */
+    public function getConsultoresXConsultoria($idConsultoria) {
+        $stmt = $this->db->prepare("SELECT b.id, concat(b.nombres, ' ',b.apellidos) nombres, "
+                . "b.cargo, a.id, valida_consultoria_ejecutada(b.id) ejecuto FROM consultoria_consultor a, consultor b "
+                . "WHERE a.codigo_consultor = b.id and a.codigo_consultoria = " . $idConsultoria);
+        $stmt->execute();
+        $lista = array();
+        $i = 0;
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $lista[$i] = $row;
+            $i++;
+        }
+        return $lista;
+    }
 
-    /*  public function getInfoComboBox($tabla, $colum_codigo, $colum_nombre){
-      $this->conectar();
-      $sql = "SELECT id, razon_social FROM ".$tabla;
-      $resp = $this->conn->consultar($sql);
-      $info = array();
-      $i = 0;
-      while($datos = @mysql_fetch_array($resp)){
-      $info[$i] = $datos[$colum_codigo];
-      $i++;
-      $info[$i] = $datos[$colum_nombre];
-      $i++;
-      }
-      $this->desconectar();
-      return $info;
-      } */
 }

@@ -5,21 +5,22 @@
  */
 
 
-function buscarConsultoresConsultoria() {
+function borrarConsultorXConsultoria() {
     $("#consultores").empty();
-    consultoria_id = $(this).attr("data-id");
+    consultor_id = $(this).attr("data-id");
 
     //alert("El codigo de la consultoria es : " + consultoria_id);
 
-    $.getJSON("/integrarCT/consultorias_consultores/consultores_x_consultoria_ajax.php",
+    $.getJSON("/integrarCT/consultorias_consultores/borrar_consultor_x_consultoria_ajax.php",
             {
-                consultoria_id: consultoria_id
+                consultor_id: consultor_id
             },
-    mostrarConsultores);
+    mensajeBorrado);
 }
 
-function mostrarConsultores(data) {
-    //alert(data);
+function mensajeBorrado(data) {
+
+    
     var filas = "";
     for (var i = 0; i < data.length; i++) {
         filas += "<tr><td>" + data[i].id + "</td><td>" + data[i].nombres + "</td>\n\

@@ -17,7 +17,7 @@
             $(document).ready(function () {
 
                 $(".dlg_consultores_consultorias").click(buscarConsultoresConsultoria);
-                 $(".dlg_borrar_consultor").click(borrarConsultorXConsultoria);
+                $(".dlg_borrar_consultor").click(borrarConsultorXConsultoria);
 
                 $('#fechaInicio').datepicker({
                     format: "yyyy/mm/dd"

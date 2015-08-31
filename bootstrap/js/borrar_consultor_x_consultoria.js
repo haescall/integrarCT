@@ -21,11 +21,13 @@ function borrarConsultorXConsultoria() {
 }
 
 function mensajeBorrado(data) {
-    alert("el estado del borrado es :" + data.borrado);
+    //alert("el estado del borrado es :" + data.borrado);
     if (data.borrado === "true") {
         buscarConsultoresConsultoria();
+        $("#msg").html("El cosultor fue borrado exitosamente!");
     } else {
-        alert("Se presento un problema desconocido ejecutando la operacion");
+        $("#msg").html("Se presento un problema desconocido ejecutando la operacion!");
+        //alert("Se presento un problema desconocido ejecutando la operacion");
     }
 
 

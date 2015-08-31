@@ -57,6 +57,7 @@ include_once 'header.php';
                 <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Lista y Asignación de Consultores</h4>
             </div>
+            <div id="msg" class="alert alert-success"></div>
             <div class="modal-body">
                 <p class="text-justify">
                     <!-- INFORMACION CONSULTORES -->

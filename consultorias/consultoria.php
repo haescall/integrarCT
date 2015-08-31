@@ -1,17 +1,9 @@
 <?php
 include_once '../config/dbconfig.php';
+include_once 'header.php';
 ?>
-<?php include_once 'header.php'; ?>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $(".dlg_consultores_consultorias").click(buscarConsultoresConsultoria);
-    });
-
-</script>
 
 <div class="clearfix"></div>
-
 <div class="container">
     <a href="add-data_consultoria.php" class="btn btn-large btn-info">
         <i class="glyphicon glyphicon-plus">

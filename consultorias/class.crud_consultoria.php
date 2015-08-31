@@ -109,15 +109,17 @@ class crud_consultoria {
                     <td><?php print($row['created_at']); ?></td>
                     <td><?php print($row['updated_at']); ?></td>
                     <td align="center">
-                        <a href="edit-data_consultoria.php?edit_id=<?php print($row['id']); ?>" title="Editar Registro"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="edit-data_consultoria.php?edit_id=<?php print($row['id']); ?>" 
+                           title="Editar Registro"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
                     <td align="center">
-                        <a href="delete_consultoria.php?delete_id=<?php print($row['id']); ?>" title="Eliminar Registro"><i class="glyphicon glyphicon-remove-circle"></i></a>
+                        <a href="delete_consultoria.php?delete_id=<?php print($row['id']); ?>" 
+                           title="Eliminar Registro"><i class="glyphicon glyphicon-remove-circle"></i></a>
                     </td>
                     <td align="center">
                         <a href="#" class="dlg_consultores_consultorias"
                            data-target="#consul" data-toggle="modal" 
-                           data-id="<?php print($row['id']); ?>"  title="Asignar Consultores">
+                           data-id-consultoria="<?php print($row['id']); ?>"  title="Asignar Consultores">
                             <i class="glyphicon glyphicon-user"></i></a>
                     </td>
                 </tr>

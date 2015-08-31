@@ -7,7 +7,13 @@
 
 function buscarConsultoresConsultoria() {
     $("#consultores").empty();
-    consultoria_id = $(this).attr("data-id");
+    
+    //alert("el valor inicio es la consultoria es : " + consultoria_id);
+    
+    if (consultoria_id === undefined || consultoria_id === "") {
+        //alert("Asigno el valor");
+        consultoria_id = $(this).attr("data-id-consultoria");
+    }
 
     //alert("El codigo de la consultoria es : " + consultoria_id);
 
@@ -25,23 +31,40 @@ function mostrarConsultores(data) {
         filas += "<tr><td>" + data[i].id + "</td><td>" + data[i].nombres + "</td>\n\
                   <td>" + data[i].cargo + " </td>";
 
-        //alert("El ejecuto es : " + data[i].ejecuto);
         if (data[i].ejecuto === 0) {
-            filas += "<td align=\"center\">\n\
-                <a href=\"inactivar-consultor_en_consultoria.php?codigo_consultor=" +
-                    data[i].id + "\"" + "title=\"Inactivar consultor\">\n\
-                <i class=\"glyphicon glyphicon-edit\"></i></a></td></tr>";
+            filas += "<td align=\"center\"><a href=\"#\" data-id=\"" +
+                    data[i].id + "\" data-id-consultoria=\"" +
+                    consultoria_id + "\" class=\"dlg_inactivar_consultor\" " +
+                    "title=\"Inactivar consultor\">" +
+                    "<i class=\"glyphicon glyphicon-edit\"></i></a></td></tr>";
         } else {
-            filas += "<td align=\"center\">\n\
-                <a href=\"delete_consultor_en_consultoria.php?codigo_consultor=" +
-                    data[i].id + "\"" + "title=\"Eliminar consultor\">\n\
-                <i class=\"glyphicon glyphicon-remove-circle\"></i></a></td></tr>";
+            filas += "<td align=\"center\"><a href=\"#\" data-id=\"" +
+                    data[i].id + "\" data-id-consultoria=\"" +
+                    consultoria_id + "\"class=\"dlg_borrar_consultor\" " +
+                    "title=\"Borrar consultor\">" +
+                    "<i class=\"glyphicon glyphicon-remove-circle\"></i></a></td></tr>";
         }
+        // $("dlg_borrar_consultor").trigger("click");
+
+
+        /*//alert("El ejecuto es : " + data[i].ejecuto);
+         if (data[i].ejecuto === 0) {
+         filas += "<td align=\"center\">\n\
+         <a href=\"inactivar-consultor_en_consultoria.php?codigo_consultor=" +
+         data[i].id + "\"" + "title=\"Inactivar consultor\">\n\
+         <i class=\"glyphicon glyphicon-edit\"></i></a></td></tr>";
+         } else {
+         filas += "<td align=\"center\">\n\
+         <a href=\"delete_consultor_en_consultoria.php?codigo_consultor=" +
+         data[i].id + "\"" + "title=\"Borrar consultor\">\n\
+         <i class=\"glyphicon glyphicon-remove-circle\"></i></a></td></tr>";
+         }*/
     }
 
     //$('tr:last', $("#consultores")).append(filas);
     //alert(filas);
     //$("#consultores").append(filas);
     $("#consultores").html(filas);
+    $(".dlg_borrar_consultor").click(borrarConsultorXConsultoria);
 }
 

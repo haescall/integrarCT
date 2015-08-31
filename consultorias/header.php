@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="../bootstrap/css/bootstrap-datepicker.css">
 
         <script src="../bootstrap/js/consultores_x_consultoria.js"></script>
+        <script src="../bootstrap/js/borrar_consultor_x_consultoria.js"></script>
 
         <!-- Load jQuery and bootstrap datepicker scripts -->
         <script src="../bootstrap/js/jquery.min.js"></script>
@@ -14,6 +15,9 @@
         <script type="text/javascript">
             // When the document is ready
             $(document).ready(function () {
+
+                $(".dlg_consultores_consultorias").click(buscarConsultoresConsultoria);
+                 $(".dlg_borrar_consultor").click(borrarConsultorXConsultoria);
 
                 $('#fechaInicio').datepicker({
                     format: "yyyy/mm/dd"

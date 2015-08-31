@@ -81,9 +81,9 @@ class crud_consultoria_consultores {
         }
     }
 
-    public function deleteConsultor($idConsultor) {
-        $stmt = $this->db->prepare("DELETE FROM consultoria_consultores WHERE codigo_consultor=:idConsultor");
-        $stmt->bindparam(":idConsultor", $idConsultor);
+    public function deleteConsultorEnConsultoria($id) {
+        $stmt = $this->db->prepare("DELETE FROM consultoria_consultor WHERE id=:id");
+        $stmt->bindparam(":id", $id);
         $stmt->execute();
         return true;
     }

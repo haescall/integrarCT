@@ -4,28 +4,29 @@
  * and open the template in the editor.
  */
 
-function borrarConsultorXConsultoria() {
+function inactivarConsultorXConsultoria() {
     consultor_id = $(this).attr("data-id-consultor");
     consultoria_id = $(this).attr("data-id-consultoria");
 
     /*alert("El codigo del consultor es : " + consultor_id);
      alert("El codigo de la consultoria es : " + consultoria_id);*/
 
-    $.getJSON("/integrarCT/consultorias_consultores/borrar_consultor_x_consultoria_ajax.php",
+    $.getJSON("/integrarCT/consultorias_consultores/inactivar_consultor_x_consultoria_ajax.php",
             {
                 id_consultor: consultor_id
             },
-    mensajeBorrado);
+    mensajeInactivo);
 }
 
-function mensajeBorrado(data) {
+function mensajeInactivo(data) {
     //alert("el estado del borrado es :" + data.borrado);
     addCssMsg();
-    if (data.borrado === "true") {
+    if (data.inactivo === "true") {
         buscarConsultoresConsultoria();
-        $("#msg").html("El cosultor fue borrado exitosamente!");
+        $("#msg").html("El cosultor fue inactivado exitosamente!");
     } else {
         $("#msg").html("Se presento un problema desconocido ejecutando la operacion!");
+        //alert("Se presento un problema desconocido ejecutando la operacion");
     }
 
 

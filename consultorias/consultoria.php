@@ -54,10 +54,11 @@ include_once 'header.php';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Lista y Asignación de Consultores</h4>
+                <button id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div id="titulo_asig" class="alert alert-info"></div>
+                <!--<h4 id="titulo_asig" class="alert alert-info">Lista y Asignación de Consultores</h4>-->
             </div>
-            <div id="msg" class="alert alert-success"></div>
+            <div id="msg"></div>
             <div class="modal-body">
                 <p class="text-justify">
                     <!-- INFORMACION CONSULTORES -->
@@ -66,11 +67,16 @@ include_once 'header.php';
                         <th>ID</th>
                         <th>Nombres</th>
                         <th>Cargo</th>
+                        <th>Valor Hora</th>
+                        <th>Estado</th>
                         <th>Acción</th>
                     </tr>
                     <tbody id="consultores">
                     </tbody>
                 </table>
+                <div id="cosultores_disp">
+
+                </div>
             </div>
             </p>
             <div class="modal-footer">
@@ -81,7 +87,9 @@ include_once 'header.php';
 </div>
 </div>
 
-
-
+<!--<input type="number" required="true" value="" maxlength="11"  size="30"
+       id="valor_hora" placeholder="Valor hora del consultor en la consultoria" /> 
+<button id="add_consultoy" class="btn btn-large btn-info"></button>-->
+ 
 <?php include_once 'footer.php'; ?>
 

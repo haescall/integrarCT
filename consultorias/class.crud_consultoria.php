@@ -119,7 +119,9 @@ class crud_consultoria {
                     <td align="center">
                         <a href="#" class="dlg_consultores_consultorias"
                            data-target="#consul" data-toggle="modal" 
-                           data-id-consultoria="<?php print($row['id']); ?>"  title="Asignar Consultores">
+                           data-id-consultoria="<?php print($row['id']); ?>"  
+                           data-nombre="<?php print($row['nombre']); ?>" 
+                           title="Asignar Consultores">
                             <i class="glyphicon glyphicon-user"></i></a>
                     </td>
                 </tr>

@@ -8,39 +8,24 @@ class crud_consultoria_consultores {
         $this->db = $DB_con;
     }
 
-    public function create($nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado) {
+    public function create($codigoConsultor, $codigoConsultoria, $valorHoraConsultoria) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO Consultoria(
-                                                            nombre,
-                                                            descripcion,
-                                                            fecha_inicio,
-                                                            codigo_cliente,
-                                                            valor_contrato,
-                                                            entregables,
-                                                            estado,
-                                                            created_at
-                                      ) VALUES(             :nombre,
-                                                            :descripcion,
-                                                            :fecha_inicio,
-                                                            :codigo_cliente,
-                                                            :valor_contrato,
-                                                            :entregables,
-                                                            :estado,
-                                                            CURDATE()
+            $stmt = $this->db->prepare("INSERT INTO consultoria_consultor(
+                                                            codigo_consultor,
+                                                            codigo_consultoria,
+                                                            valor_hora_consultoria,
+                                                            estado_consultor
+                                      ) VALUES(             :codigoConsultor,
+                                                            :codigoConsultoria,
+                                                            :valorHoraConsultoria,
+                                                            'A'
                                       )");
-
-            $stmt->bindparam(":nombre", $nombre);
-            $stmt->bindparam(":descripcion", $descripcion);
-            $stmt->bindparam(":fecha_inicio", $fecha_inicio);
-            $stmt->bindparam(":codigo_cliente", $codigo_cliente);
-            $stmt->bindparam(":valor_contrato", $valor_contrato);
-            $stmt->bindparam(":entregables", $entregables);
-            $stmt->bindparam(":estado", $estado);
-
+            $stmt->bindparam(":codigoConsultor", $codigoConsultor);
+            $stmt->bindparam(":codigoConsultoria", $codigoConsultoria);
+            $stmt->bindparam(":valorHoraConsultoria", $valorHoraConsultoria);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
-            //echo ErrorMsg();
             echo $e->getMessage();
             return false;
         }
@@ -81,16 +66,73 @@ class crud_consultoria_consultores {
         }
     }
 
-    public function deleteConsultorEnConsultoria($id) {
-        $stmt = $this->db->prepare("DELETE FROM consultoria_consultor WHERE id=:id");
-        $stmt->bindparam(":id", $id);
-        $stmt->execute();
-        return true;
+    public function getConsultoresXConsultoria($idConsultoria) {
+        try {
+            $stmt = $this->db->prepare("SELECT b.id, concat(b.nombres, ' ',b.apellidos) nombres, "
+                    . "b.cargo, a.estado_consultor, a.valor_hora_consultoria, valida_consultoria_ejecutada(b.id) ejecuto "
+                    . "FROM consultoria_consultor a, consultor b "
+                    . "WHERE a.codigo_consultor = b.id and a.codigo_consultoria = " . $idConsultoria);
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function deleteConsultorEnConsultoria($idConsultor) {
+        try {
+            $stmt = $this->db->prepare("DELETE FROM consultoria_consultor WHERE codigo_consultor=:idConsultor");
+            $stmt->bindparam(":idConsultor", $idConsultor);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function inactivarConsultorEnConsultoria($idConsultor) {
+        try {
+            $stmt = $this->db->prepare("UPDATE consultoria_consultor SET "
+                    . "estado_consultor = 'I' WHERE codigo_consultor=:idConsultor");
+            $stmt->bindparam(":idConsultor", $idConsultor);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getConsultoresDisponiblesXConsultoria($idConsultoria) {
+        try {
+            $stmt = $this->db->prepare("SELECT a.id, concat(a.nombres, ' ',a.apellidos) nombres, "
+                    . " a.cargo FROM consultor a WHERE a.id NOT IN (SELECT b.codigo_consultor "
+                    . " FROM consultoria_consultor b WHERE a.id = b.codigo_consultor "
+                    . " and b.codigo_consultoria = " . $idConsultoria . ")");
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     /* paging */
 
-    public function dataview($query) {
+    public function dataview(
+    $query) {
         $stmt = $this->db->prepare($query);
         $stmt->execute();
 
@@ -109,7 +151,8 @@ class crud_consultoria_consultores {
                     <td><?php print($row['created_at']); ?></td>
                     <td><?php print($row['updated_at']); ?></td>
                     <td align="center">
-                        <a href="edit-data_consultoria.php?edit_id=<?php print($row['id']); ?>" title="Editar Registro"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="edit-data_consultoria.php?edit_id = <?php print($row['id']);
+                ?>" title="Editar Registro"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
                     <td align="center">
                         <a href="delete_consultoria.php?delete_id=<?php print($row['id']); ?>" title="Eliminar Registro"><i class="glyphicon glyphicon-remove-circle"></i></a>
@@ -117,7 +160,9 @@ class crud_consultoria_consultores {
                     <td align="center">
                         <a href="#" class="dlg_consultores_consultorias"
                            data-target="#consul" data-toggle="modal" 
-                           data-id="<?php print($row['id']); ?>"  title="Asignar Consultor">
+                           data-id="<?php print($row['id']); ?>" 
+                           data-nombre="<?php print($row['nombre']); ?>"  
+                           title="Asignar Consultor">
                             <i class="glyphicon glyphicon-user"></i></a>
                     </td>
                 </tr>
@@ -176,20 +221,6 @@ class crud_consultoria_consultores {
                 }
                 ?></ul><?php
         }
-    }
-
-    public function getConsultoresXConsultoria($idConsultoria) {
-        $stmt = $this->db->prepare("SELECT b.id, concat(b.nombres, ' ',b.apellidos) nombres, "
-                . "b.cargo, a.id, valida_consultoria_ejecutada(b.id) ejecuto FROM consultoria_consultor a, consultor b "
-                . "WHERE a.codigo_consultor = b.id and a.codigo_consultoria = " . $idConsultoria);
-        $stmt->execute();
-        $lista = array();
-        $i = 0;
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $lista[$i] = $row;
-            $i++;
-        }
-        return $lista;
     }
 
 }

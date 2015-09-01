@@ -8,6 +8,9 @@
 
         <script src="../bootstrap/js/consultores_x_consultoria.js"></script>
         <script src="../bootstrap/js/borrar_consultor_x_consultoria.js"></script>
+        <script src="../bootstrap/js/inactivar_consultor_x_consultoria.js"></script>
+        <script src="../bootstrap/js/adicionar_consultor_a_consultoria.js"></script>
+
 
         <!-- Load jQuery and bootstrap datepicker scripts -->
         <script src="../bootstrap/js/jquery.min.js"></script>
@@ -17,7 +20,11 @@
             $(document).ready(function () {
 
                 $(".dlg_consultores_consultorias").click(buscarConsultoresConsultoria);
-                $(".dlg_borrar_consultor").click(borrarConsultorXConsultoria);
+                //$(".dlg_borrar_consultor").click(borrarConsultorXConsultoria);
+                //$(".dlg_inactivar_consultor").click(inactivarConsultorXConsultoria);
+                $("#close").click(limpiarCssMsg);
+                //$("#add_consultor").click(adicionarConsultorAConsultoria);
+
 
                 $('#fechaInicio').datepicker({
                     format: "yyyy/mm/dd"

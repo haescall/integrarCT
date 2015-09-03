@@ -25,7 +25,7 @@ include_once 'header.php';
             <th>Estado</th>
             <th>Fecha Creacion</th>
             <th>Última Modificación</th>
-            <th colspan="3" align="center">Acciones</th>
+            <th colspan="4" align="center">Acciones</th>
         </tr>
         <?php
         $query = " SELECT c.id, c.nombre, c.descripcion, c.fecha_inicio, "
@@ -54,7 +54,8 @@ include_once 'header.php';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button id="close" class="close" 
+                        data-dismiss="modal" aria-hidden="true">&times;</button>
                 <div id="titulo_asig" class="alert alert-info"></div>
                 <!--<h4 id="titulo_asig" class="alert alert-info">Lista y Asignación de Consultores</h4>-->
             </div>
@@ -64,7 +65,7 @@ include_once 'header.php';
                     <!-- INFORMACION CONSULTORES -->
                 <table class='table table-bordered'>
                     <tr class="success">
-                        <th>ID</th>
+                        <th>ID Consultor</th>
                         <th>Nombres</th>
                         <th>Cargo</th>
                         <th>Valor Hora</th>
@@ -87,9 +88,41 @@ include_once 'header.php';
 </div>
 </div>
 
-<!--<input type="number" required="true" value="" maxlength="11"  size="30"
-       id="valor_hora" placeholder="Valor hora del consultor en la consultoria" /> 
-<button id="add_consultoy" class="btn btn-large btn-info"></button>-->
- 
+
+<!-- VENTANA MODAL DE LA ASIGNACIN DE CONSULTORES************************************************************ -->
+<div id="dlg-presu" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button id="close" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div id="titulo_presu" class="alert alert-info"></div>
+            </div>
+            <div id="msg"></div>
+            <div class="modal-body">
+                <p class="text-justify">
+                    <!-- INFORMACION CONSULTORES -->
+                <table class='table table-bordered'>
+                    <tr class="success">
+                        <th>ID Fase</th>
+                        <th>Descripcion</th>
+                        <th>Hora Presupuestadas</th>
+                        <th>Acción</th>
+                    </tr>
+                    <tbody id="presupuesto">
+                    </tbody>
+                </table>
+                <div id="presu_disp">
+
+                </div>
+            </div>
+            </p>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
 <?php include_once 'footer.php'; ?>
 

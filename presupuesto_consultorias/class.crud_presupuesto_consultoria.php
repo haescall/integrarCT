@@ -1,6 +1,6 @@
 <?php
 
-class crud_consultoria {
+class crud_presupuesto_consultoria {
 
     private $db;
 
@@ -8,39 +8,22 @@ class crud_consultoria {
         $this->db = $DB_con;
     }
 
-    public function create($nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado) {
+    public function create($codigoFase, $codigoConsultoria, $horasPresupuestadas) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO Consultoria(
-                                                            nombre,
-                                                            descripcion,
-                                                            fecha_inicio,
-                                                            codigo_cliente,
-                                                            valor_contrato,
-                                                            entregables,
-                                                            estado,
-                                                            created_at
-                                      ) VALUES(             :nombre,
-                                                            :descripcion,
-                                                            :fecha_inicio,
-                                                            :codigo_cliente,
-                                                            :valor_contrato,
-                                                            :entregables,
-                                                            :estado,
-                                                            CURDATE()
+            $stmt = $this->db->prepare("INSERT INTO presupuesto_consultoria_fases(
+                                                            codigo_fase,
+                                                            codigo_consultoria,
+                                                            numero_horas_presupuestadas
+                                      ) VALUES(             :codigoFase,
+                                                            :codigoConsultoria,
+                                                            :horasPresupuestadas
                                       )");
-
-            $stmt->bindparam(":nombre", $nombre);
-            $stmt->bindparam(":descripcion", $descripcion);
-            $stmt->bindparam(":fecha_inicio", $fecha_inicio);
-            $stmt->bindparam(":codigo_cliente", $codigo_cliente);
-            $stmt->bindparam(":valor_contrato", $valor_contrato);
-            $stmt->bindparam(":entregables", $entregables);
-            $stmt->bindparam(":estado", $estado);
-
+            $stmt->bindparam(":codigoFase", $codigoFase);
+            $stmt->bindparam(":codigoConsultoria", $codigoConsultoria);
+            $stmt->bindparam(":horasPresupuestadas", $horasPresupuestadas);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
-            //echo ErrorMsg();
             echo $e->getMessage();
             return false;
         }
@@ -81,23 +64,65 @@ class crud_consultoria {
         }
     }
 
-    public function delete($id) {
-        $stmt = $this->db->prepare("DELETE FROM consultoria WHERE id=:id");
-        $stmt->bindparam(":id", $id);
-        $stmt->execute();
-        return true;
+    public function getPresupuestoXConsultoria($idConsultoria) {
+        try {
+            $stmt = $this->db->prepare("SELECT a.id id_consecutivo, b.id id_fase, "
+                    . "b.descripcion, a.numero_horas_presupuestadas "
+                    . "FROM presupuesto_consultoria_fases a, fases b "
+                    . "WHERE a.codigo_fase = b.id and a.codigo_consultoria = " . $idConsultoria);
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function deletePresupuestoEnConsultoria($id) {
+        try {
+            $stmt = $this->db->prepare("DELETE FROM presupuesto_consultoria_fases WHERE id=:id");
+            $stmt->bindparam(":id", $id);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public function getFasesDisponiblesPresupuestoXConsultoria($idConsultoria) {
+        try {
+            $stmt = $this->db->prepare("SELECT a.id, a.descripcion"
+                    . " FROM fases a WHERE a.id NOT IN (SELECT b.codigo_fase "
+                    . " FROM presupuesto_consultoria_fases b WHERE a.id = b.codigo_fase "
+                    . " and b.codigo_consultoria = " . $idConsultoria . ")");
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     /* paging */
 
-    public function dataview($query) {
+    public function dataview(
+    $query) {
         $stmt = $this->db->prepare($query);
         $stmt->execute();
-        $i = 0;
 
         if ($stmt->rowCount() > 0) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $i++;
                 ?>
                 <tr>
                     <td><?php print($row['id']); ?></td>
@@ -111,29 +136,18 @@ class crud_consultoria {
                     <td><?php print($row['created_at']); ?></td>
                     <td><?php print($row['updated_at']); ?></td>
                     <td align="center">
-                        <a href="edit-data_consultoria.php?edit_id=<?php print($row['id']); ?>" 
-                           title="Editar Registro"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="edit-data_consultoria.php?edit_id = <?php print($row['id']);
+                ?>" title="Editar Registro"><i class="glyphicon glyphicon-edit"></i></a>
                     </td>
                     <td align="center">
-                        <a href="delete_consultoria.php?delete_id=<?php print($row['id']); ?>" 
-                           title="Eliminar Registro"><i class="glyphicon glyphicon-remove-circle"></i></a>
+                        <a href="delete_consultoria.php?delete_id=<?php print($row['id']); ?>" title="Eliminar Registro"><i class="glyphicon glyphicon-remove-circle"></i></a>
                     </td>
                     <td align="center">
                         <a href="#" class="dlg_consultores_consultorias"
-                           data-proceso="1" id="asig_consultores<?php print(+$i); ?>"
                            data-target="#consul" data-toggle="modal" 
-                           data-id-consultoria="<?php print($row['id']); ?>"  
-                           data-nombre="<?php print($row['nombre']); ?>" 
-                           title="Asignar Consultores">
-                            <i class="glyphicon glyphicon-user"></i></a>
-                    </td>
-                    <td align="center">
-                        <a href="#" class="dlg_presupuesto_consultorias"
-                           data-proceso="2" id="asig_presu<?php print(+$i); ?>"
-                           data-target="#dlg-presu" data-toggle="modal" 
-                           data-id-consultoria="<?php print($row['id']); ?>"  
-                           data-nombre="<?php print($row['nombre']); ?>" 
-                           title="Asignar Presupuesto">
+                           data-id="<?php print($row['id']); ?>" 
+                           data-nombre="<?php print($row['nombre']); ?>"  
+                           title="Asignar Consultor">
                             <i class="glyphicon glyphicon-user"></i></a>
                     </td>
                 </tr>
@@ -194,21 +208,4 @@ class crud_consultoria {
         }
     }
 
-    /* paging */
-
-    /*  public function getInfoComboBox($tabla, $colum_codigo, $colum_nombre){
-      $this->conectar();
-      $sql = "SELECT id, razon_social FROM ".$tabla;
-      $resp = $this->conn->consultar($sql);
-      $info = array();
-      $i = 0;
-      while($datos = @mysql_fetch_array($resp)){
-      $info[$i] = $datos[$colum_codigo];
-      $i++;
-      $info[$i] = $datos[$colum_nombre];
-      $i++;
-      }
-      $this->desconectar();
-      return $info;
-      } */
 }

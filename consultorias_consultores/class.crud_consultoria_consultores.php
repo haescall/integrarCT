@@ -68,7 +68,7 @@ class crud_consultoria_consultores {
 
     public function getConsultoresXConsultoria($idConsultoria) {
         try {
-            $stmt = $this->db->prepare("SELECT b.id, concat(b.nombres, ' ',b.apellidos) nombres, "
+            $stmt = $this->db->prepare("SELECT a.id id_consecutivo, b.id id_consultor, concat(b.nombres, ' ',b.apellidos) nombres, "
                     . "b.cargo, a.estado_consultor, a.valor_hora_consultoria, valida_consultoria_ejecutada(b.id) ejecuto "
                     . "FROM consultoria_consultor a, consultor b "
                     . "WHERE a.codigo_consultor = b.id and a.codigo_consultoria = " . $idConsultoria);
@@ -85,10 +85,10 @@ class crud_consultoria_consultores {
         }
     }
 
-    public function deleteConsultorEnConsultoria($idConsultor) {
+    public function deleteConsultorEnConsultoria($idConsecutivo) {
         try {
-            $stmt = $this->db->prepare("DELETE FROM consultoria_consultor WHERE codigo_consultor=:idConsultor");
-            $stmt->bindparam(":idConsultor", $idConsultor);
+            $stmt = $this->db->prepare("DELETE FROM consultoria_consultor WHERE id=:idConsecutivo");
+            $stmt->bindparam(":idConsecutivo", $idConsecutivo);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -97,11 +97,11 @@ class crud_consultoria_consultores {
         }
     }
 
-    public function inactivarConsultorEnConsultoria($idConsultor) {
+    public function inactivarConsultorEnConsultoria($idConsecutivo) {
         try {
             $stmt = $this->db->prepare("UPDATE consultoria_consultor SET "
-                    . "estado_consultor = 'I' WHERE codigo_consultor=:idConsultor");
-            $stmt->bindparam(":idConsultor", $idConsultor);
+                    . "estado_consultor = 'I' WHERE id=:idConsecutivo");
+            $stmt->bindparam(":idConsecutivo", $idConsecutivo);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {

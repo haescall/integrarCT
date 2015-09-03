@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 
-function inactivarConsultorXConsultoria() {
+function borrarPresupuestoXConsultoria() {
     consecutivo_id = $(this).attr("data-id-consecutivo");
+    //consultoria_id = $(this).attr("data-id-consultoria");
 
+    //alert("el consecutivo es : " + consecutivo_id);
     //alert("El codigo del consultor es : " + consultor_id);
     //alert("El codigo de la consultoria es : " + consultoria_id);
 
-    $.getJSON("/integrarCT/consultorias_consultores/inactivar_consultor_x_consultoria_ajax.php",
+    $.getJSON("/integrarCT/presupuesto_consultorias/borrar_presupuesto_x_consultoria_ajax.php",
             {
                 id_consecutivo: consecutivo_id
             },

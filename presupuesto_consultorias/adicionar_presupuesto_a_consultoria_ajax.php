@@ -1,7 +1,7 @@
 <?php
 
 include_once '../config/dbconfig.php';
-if ($crud_consultoria_consultores->create($_GET['id_consultor'], $_GET['id_consultoria'], $_GET['valor_hora'])) {
+if ($crud_presupuesto_consultoria->create($_GET['id_fase'], $_GET['id_consultoria'], $_GET['horas_presupuestadas'])) {
     echo "{\"exito\":\"true\"}";
 } else {
     echo "{\"exito\":\"false\"}";

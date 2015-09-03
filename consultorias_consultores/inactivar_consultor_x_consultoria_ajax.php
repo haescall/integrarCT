@@ -1,10 +1,10 @@
 <?php
 
 include_once '../config/dbconfig.php';
-if ($crud_consultoria_consultores->inactivarConsultorEnConsultoria($_GET['id_consultor'])) {
-    echo "{\"inactivo\":\"true\"}";
+if ($crud_consultoria_consultores->inactivarConsultorEnConsultoria($_GET['id_consecutivo'])) {
+    echo "{\"exito\":\"true\"}";
 } else {
-    echo "{\"inactivo\":\"false\"}";
+    echo "{\"exito\":\"false\"}";
 }
 exit();
 

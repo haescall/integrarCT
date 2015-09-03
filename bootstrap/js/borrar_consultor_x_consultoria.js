@@ -5,29 +5,18 @@
  */
 
 function borrarConsultorXConsultoria() {
-    consultor_id = $(this).attr("data-id-consultor");
-    consultoria_id = $(this).attr("data-id-consultoria");
+    consecutivo_id = $(this).attr("data-id-consecutivo");
+    //consultoria_id = $(this).attr("data-id-consultoria");
+    //id_control = $(this).attr("data-id-control");
 
-    /*alert("El codigo del consultor es : " + consultor_id);
-     alert("El codigo de la consultoria es : " + consultoria_id);*/
+    //alert("el consecutivo es : " + consecutivo_id);
+    //alert("El id del control es : " + id_control);
+    //alert("El codigo del consultor es : " + consultor_id);
+    //alert("El codigo de la consultoria es : " + consultoria_id);
 
     $.getJSON("/integrarCT/consultorias_consultores/borrar_consultor_x_consultoria_ajax.php",
             {
-                id_consultor: consultor_id
+                id_consecutivo: consecutivo_id
             },
-    mensajeBorrado);
+    mensajeExito);
 }
-
-function mensajeBorrado(data) {
-    //alert("el estado del borrado es :" + data.borrado);
-    addCssMsg();
-    if (data.borrado === "true") {
-        buscarConsultoresConsultoria();
-        $("#msg").html("El cosultor fue borrado exitosamente!");
-    } else {
-        $("#msg").html("Se presento un problema desconocido ejecutando la operacion!");
-    }
-
-
-}
-

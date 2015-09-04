@@ -134,7 +134,7 @@ class crud_consultoria {
                            data-id-consultoria="<?php print($row['id']); ?>"  
                            data-nombre="<?php print($row['nombre']); ?>" 
                            title="Asignar Presupuesto">
-                            <i class="glyphicon glyphicon-user"></i></a>
+                            <i class="glyphicon glyphicon-usd"></i></a>
                     </td>
                 </tr>
                 <?php

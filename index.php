@@ -1,43 +1,47 @@
 <?php
-include_once 'dbconfig.php';
+
+//Proceso de conexion a la BD
+$conex = mysql_connect("localhost","root", "") or die ("No se puede realizar la conexión");
+
+mysql_select_db("integrar",$conex) or die ("ERROR con la base de datos");
+
+//Inicia una sesión para el usuario o la continua si ya está abierta
+session_start();
+
+//validar si está logueado actualmente
+if (!$_SESSION){
+    header("location:login.php");
+}
+
 ?>
-<?php include_once 'header.php'; ?>
 
-<div class="clearfix"></div>
 
-<div class="container">
-<a href="add-data.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Add Records</a>
-</div>
+<!doctype html>
+<html lang="es">
+<head>
 
-<div class="clearfix"></div><br />
 
-<div class="container">
-	 <table class='table table-bordered table-responsive'>
-     <tr>
-     <th>#</th>
-     <th>First Name</th>
-     <th>Last Name</th>
-     <th>E - mail ID</th>
-     <th>Contact No</th>
-     <th colspan="2" align="center">Actions</th>
-     </tr>
-     <?php
-		$query = "SELECT * FROM tbl_users";       
-		$records_per_page=3;
-		$newquery = $crud->paging($query,$records_per_page);
-		$crud->dataview($newquery);
-	 ?>
-    <tr>
-        <td colspan="7" align="center">
- 			<div class="pagination-wrap">
-            <?php $crud->paginglink($query,$records_per_page); ?>
-        	</div>
-        </td>
-    </tr>
- 
-</table>
-   
-       
-</div>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/main.css">
+    <link rel="stylesheet" href="bootstrap/css/miestilo.css">
+    <link rel="stylesheet" href="bootstrap/css/estilo.css">
+    <link rel="stylesheet" href="bootstrap/css/carrusel.css">
 
-<?php include_once 'footer.php'; ?>
+
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="UTF-8">
+    <title>Integrar - Inicio</title>
+</head>
+<body>
+
+<?php include_once 'menu_admin.php'; ?>
+
+
+
+
+</body>
+</html>

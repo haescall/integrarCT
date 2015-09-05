@@ -1,0 +1,38 @@
+
+<!-- barra de navegacion -->
+<div class="navbar-wrapper">
+    <div class="container">
+        <!-- barra que se encoje cuando se visualiza en en celular -->
+        <div class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#mario">Menú Principal</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Inicio</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proceso Principal<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Registrar Tiempos Consultorías</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuración<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Cambio de Contraseña</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

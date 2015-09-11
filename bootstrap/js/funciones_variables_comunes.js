@@ -50,8 +50,8 @@ function addCssMsg() {
 function mensajeExito(data) {
     addCssMsg();
     if (data.exito === "true") {
-        alert("El id del control es : " + id_control);
-        alert("El proceso es : " + codigoProceso);
+        //alert("El id del control es : " + id_control);
+        //alert("El proceso es : " + codigoProceso);
         if (codigoProceso === "1") {
             consultoresXConsultoria(id_control);
         } else if (codigoProceso === "2") {

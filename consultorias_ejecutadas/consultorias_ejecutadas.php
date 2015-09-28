@@ -22,31 +22,27 @@ include_once '../config/dbconfig.php';
     $stmt->execute();
     ?>
 
-    <tr class="success">
-        <td>Consultorias creadas...</td>  
-        <td>
-            <select name="codigo_consultoria" class="form-control" id="codigo_consultoria" required>
-                <option value="" selected>Seleccione una consultoría...</option>
-                <?php
-                if ($stmt->rowCount() > 0) {
-                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        ?>
-                        <option value="<?php print($row['id']); ?>">
-                            <?php print($row['nombre']); ?>
-                        </option>
-                        <?php
-                    }
+    <div class="success pui-grid-col-10">Consultorias creadas...  
+        <select name="con_eje" id="con_eje" 
+                class="form-control" >
+            <option value="" selected>Seleccione una consultoría...</option>
+            <?php
+            if ($stmt->rowCount() > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    ?> <option value="<?php print(trim($row['id'])); ?>"><?php print(trim($row['nombre'])); ?></option>
+                    <?php
                 }
-                ?>
+            }
+            ?>
+        </select>&nbsp;&nbsp;
+        <button id="find-ejec" type="button" class="btn btn-default glyphicon glyphicon-search"/>
+    </div>
 
-            </select>
-        </td>
-    </tr>
+    </br></br>
 
-    </br>
-
-    Registro de horas y actividades...
+    <div id="msg"></div>
     <table class='table table-bordered table-responsive'>
+        <caption>Registro de horas y actividades...</caption>
         <tr class="success">
             <th>#</th>
             <th>Fecha</th>

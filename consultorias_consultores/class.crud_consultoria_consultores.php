@@ -84,6 +84,24 @@ class crud_consultoria_consultores {
             echo $e->getMessage();
         }
     }
+    
+     public function getConsultoriasActivas() {
+        try {
+            $stmt = $this->db->prepare("SELECT a.id, a.nombre, a.descripcion, a.fecha_inicio, a.codigo_cliente, "
+                    . "a.valor_contrato, a.entregables, a.estado FROM consultoria a "
+                    . "WHERE a.estado = 'A'");
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 
     public function deleteConsultorEnConsultoria($idConsecutivo) {
         try {

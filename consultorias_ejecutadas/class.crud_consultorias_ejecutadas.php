@@ -96,10 +96,15 @@ class crud_consultorias_ejecutadas {
     }
 
     public function delete($id) {
-        $stmt = $this->db->prepare("DELETE FROM consultorias_ejecutadas WHERE id=:id");
-        $stmt->bindparam(":id", $id);
-        $stmt->execute();
-        return true;
+        try {
+            $stmt = $this->db->prepare("DELETE FROM consultorias_ejecutadas WHERE id=:id");
+            $stmt->bindparam(":id", $id);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
     }
 
     /* paging */

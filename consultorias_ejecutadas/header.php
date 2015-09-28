@@ -5,23 +5,45 @@
         <title>Consultorías Ejecutadas</title>
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="../bootstrap/css/bootstrap-datepicker.css">
-
-        <script type="text/javascript" src="../bootstrap/js/ejecuciones_x_consultoria.js"></script>
+        <link rel="stylesheet" href="../resources/primeui-2.1/themes/bluesky/theme.css">
+        <link rel="stylesheet" href="../resources/jqueryui/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="../resources/font-awesome-4.4.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../resources/primeui-2.1/production/primeui-2.1-min.css">
 
         <!-- Load jQuery and bootstrap datepicker scripts -->
         <script src="../bootstrap/js/jquery.min.js"></script>
+        <script type="text/javascript" src="../resources/jqueryui/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="../resources/primeui-2.1/production/primeui-2.1-min.js"></script>
         <script src="../bootstrap/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="../resources/js/funciones_comunes.js"></script>
+        <script type="text/javascript" src="../resources/js/ejecuciones_x_consultoria.js"></script>
+        <script type="text/javascript" src="../resources/js/borrar_ejecucion_x_consultoria.js"></script>
         <script type="text/javascript">
-            // When the document is ready
             $(document).ready(function () {
 
-                $("#codigo_consultoria").change(getEjecucionesXConsultoria);
-
+                //$("#con_eje").change(getEjecucionesXConsultoria);
+                $("#find-ejec").click(getEjecucionesXConsultoria);
                 $('#fecha').datepicker({
                     format: "yyyy/mm/dd"
                 });
-
             });
+
+            //alert(hasEventListener($(document), "change"));
+
+            $(function () {
+                //$("#panelCons").puiaccordion();
+                $("#con_eje").puidropdown({
+                    //completeSource: countries,
+                    filter: true
+                });
+                $("#cod_consul").puidropdown({
+                    //completeSource: countries,
+                    filter: true
+                });
+                //$('#multiple').puiaccordion({multiple: true});
+            });
+
+
         </script>
 
     </head>

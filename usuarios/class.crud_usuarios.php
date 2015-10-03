@@ -8,26 +8,23 @@ class crud_usuarios {
         $this->db = $DB_con;
     }
 
-    public function create($name, $email, $password, $rememberToken) {
+    public function create($email, $password, $codigo_rol) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO users(name,
-                                                            email,
-                                                            password,
-                                                            remember_token,
-                                                            created_at
-                                      ) VALUES(             :name,
-                                                            :email,
-                                                            :rememberToken,
-                                                            CURDATE()
+            $stmt = $this->db->prepare("INSERT INTO users(email,
+                                                          password,
+                                                          created_at,
+                                                          codigo_rol
+                                      ) VALUES(           :email,
+                                                          :password,
+                                                          CURDATE(),
+                                                          :codigo_rol
                                       )");
-            $stmt->bindparam(":name", $name);
             $stmt->bindparam(":email", $email);
             $stmt->bindparam(":password", $password);
-            $stmt->bindparam(":rememberToken", $rememberToken);
+            $stmt->bindparam(":codigo_rol", $codigo_rol);
             $stmt->execute();
             return true;
-        } catch (PDOException $e) {
-            echo ErrorMsg();
+        } catch (PDOException $e) {            
             echo $e->getMessage();
             return false;
         }

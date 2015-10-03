@@ -2,18 +2,21 @@
 include_once '../config/dbconfig.php';
 if(isset($_POST['btn-save']))
 {
-	$tipo_documento = $_POST['tipo_documento'];
+    $tipo_documento = $_POST['tipo_documento'];
     $documento = $_POST['documento'];
     $nombres = $_POST['nombres'];
-	$apellidos = $_POST['apellidos'];
+    $apellidos = $_POST['apellidos'];
     $cargo = $_POST['cargo'];
     $telefono = $_POST['telefono'];
     $direccion = $_POST['direccion'];
     $fecha_ingreso = $_POST['fecha_ingreso'];
-	$estado = $_POST['estado'];
+    $estado = $_POST['estado'];
     $email_contacto = $_POST['email_contacto'];
+    $codigo_rol = $_POST['codigo_rol'];
 	
-	if($crud_consultor->create($tipo_documento,$documento,$nombres,$apellidos,$cargo,$telefono,$direccion,$fecha_ingreso, $estado, $email_contacto))
+	if(   $crud_usuarios->create($email_contacto, $documento, $codigo_rol)
+              && $crud_consultor->create($tipo_documento,$documento,$nombres,$apellidos,$cargo,$telefono,$direccion,$fecha_ingreso, $estado, $email_contacto)
+           )    
 	{
 		header("Location: add-data_consultor.php?inserted");
 	}
@@ -21,6 +24,8 @@ if(isset($_POST['btn-save']))
 	{
 		header("Location: add-data_consultor.php?failure");
 	}
+        
+
 }
 ?>
 <?php include_once 'header.php'; ?>
@@ -121,7 +126,35 @@ else if(isset($_GET['failure']))
             <td>Email Contacto</td>
             <td><input type='text' name='email_contacto' class='form-control' required></td>
         </tr>
- 
+        
+    
+        <?php
+            $stmt = $DB_con->prepare("SELECT id, nombre_rol FROM roles");
+            $stmt->execute();
+            ?>
+
+            <tr class="success">
+                <td>Perfil</td>
+                <td>
+                    <select name="codigo_rol" class="form-control" required>
+                        <option value="" selected>Seleccione un perfil...</option>
+                        <?php
+                        if($stmt->rowCount()>0)
+                        {
+                            while($row=$stmt->fetch(PDO::FETCH_ASSOC)){ ?>
+                                <option value="<?php print($row['id']); ?>">
+                                    <?php print($row['nombre_rol']); ?>
+                                </option>
+                            <?php    }
+                        }
+                        ?>
+
+                    </select>
+                </td>
+            </tr>
+
+    
+        
         <tr>
             <td colspan="2">
             <button type="submit" class="btn btn-primary" name="btn-save">

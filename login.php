@@ -26,7 +26,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-            <div class="text-center"><img src="images/logo.jpg"></div>
+        <div class="text-center"><img src="resources/img/logo.jpg"></div>
 
             <div class="modal-header">
 

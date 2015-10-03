@@ -4,7 +4,7 @@ $DB_host = "localhost";
 $DB_user = "root";
 $DB_pass = "";
 $DB_name = "integrarct";
-
+session_start();
 
 try {
     $DB_con = new PDO("mysql:host={$DB_host};dbname={$DB_name}", $DB_user, $DB_pass);
@@ -32,6 +32,8 @@ $crud_consultorias_ejecutadas = new crud_consultorias_ejecutadas($DB_con);
 $crud_presupuesto_consultoria = new crud_presupuesto_consultoria($DB_con);
 $crud_facturacion_consultoria = new crud_facturacion_consultoria($DB_con);
 $crud_gastos_consultoria = new crud_gastos_consultoria($DB_con);
+
+//$_SESSION["codigo_consultor"] = 1;
 
 
 

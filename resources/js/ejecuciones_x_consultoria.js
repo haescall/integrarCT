@@ -40,8 +40,8 @@ function mostrarEjecucionesXConsultoria(data) {
 
             //alert("El valor de si tiene ejecuciones es : " + data[i].ejecuto);
             filas += "<td align=\"center\"><a href=\"edit-data_consultorias_ejecutadas.php?edit_id="+
-                    data[i].id + " data-id-consultoria=\"" + consultoria_id + "\" " + 
-                    "\" title=\"Editar Registro\">" +
+                    data[i].id + "&data-id-consultoria="+ consultoria_id + " \"" +
+                    " title=\"Editar Registro\">" +
                     "<i class=\"glyphicon glyphicon-edit\"></i></a></td>";
 
             filas += "<td align=\"center\"><a href=\"#\" data-id-consecutivo=\"" +

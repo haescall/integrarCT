@@ -3,7 +3,7 @@
 //Proceso de conexion a la BD
 $conex = mysql_connect("localhost","root", "") or die ("No se puede realizar la conexión");
 
-mysql_select_db("integrar",$conex) or die ("ERROR con la base de datos");
+mysql_select_db("integrarct",$conex) or die ("ERROR con la base de datos");
 
 //Inicia una sesión para el usuario o la continua si ya está abierta
 session_start();
@@ -28,7 +28,7 @@ if (!$_SESSION){
     <link rel="stylesheet" href="bootstrap/css/carrusel.css">
 
 
-    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

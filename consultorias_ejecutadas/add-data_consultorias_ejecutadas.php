@@ -4,13 +4,14 @@ if (isset($_POST['btn-save'])) {
     //$cod_consul =  $_POST['cod_consul'];
     $codigo_fase = $_POST['codigo_fase'];
     $codigo_consultoria = $_POST['cod_consul'];
-    $codigo_consultor = $_POST['codigo_consultor'];
+    $codigo_consultor = $_SESSION["codigo_consultor"];
     $fecha = $_POST['fecha'];
     $horas_laboradas = $_POST['horas_laboradas'];
     $valor = $_POST['valor'];
     $actividades = $_POST['actividades'];
 
-    if ($crud_consultorias_ejecutadas->create($codigo_fase, $codigo_consultoria, $codigo_consultor, $fecha, $horas_laboradas, $valor, $actividades)) {
+    if ($crud_consultorias_ejecutadas->create($codigo_fase, $codigo_consultoria,
+            $codigo_consultor, $fecha, $horas_laboradas, $valor, $actividades)) {
         header("Location: add-data_consultorias_ejecutadas.php?inserted");
     } else {
         header("Location: add-data_consultorias_ejecutadas.php?failure");
@@ -54,8 +55,8 @@ if (isset($_GET['inserted'])) {
                 <td>
                     <select id="cod_consul" name="cod_consul" class="form-control" required>
                         <option value="" selected>Seleccione una consultoría...</option>
-                        <?php
-                        foreach ($crud_consultoria_consultores->getConsultoriasActivas() as $value) {
+                        <?php                        
+                        foreach ($crud_consultoria_consultores->getConsultoriasXConsultor($_SESSION["codigo_consultor"]) as $value) {
                             ?>
                             <option value = "<?php print($value['id']); ?>">
                                 <?php print($value['nombre']); ?></option>  

@@ -1,5 +1,6 @@
 <?php
 include_once '../config/dbconfig.php';
+$_SESSION["codigo_consultor"] = 1;
 ?>
 <?php include_once 'header.php'; ?>
 
@@ -18,20 +19,34 @@ include_once '../config/dbconfig.php';
 <div class="container">
 
     <?php
-    $stmt = $DB_con->prepare("SELECT id, nombre FROM consultoria where estado = 'A'");
-    $stmt->execute();
+    //$stmt = $DB_con->prepare("SELECT id, nombre FROM consultoria where estado = 'A'");
+    //$stmt->execute();
     ?>
 
+    <!-- <div class="success pui-grid-col-10">Consultorias creadas...  
+         <select name="con_eje" id="con_eje" 
+                 class="form-control" >
+             <option value="" selected>Seleccione una consultoría...</option>
+    <?php
+    /* if ($stmt->rowCount() > 0) {
+      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      ?> <option value="<?php print(trim($row['id'])); ?>">
+      <?php print(trim($row['nombre'])); ?></option>
+      <?php
+      }
+      } */
+    ?>
+         </select>&nbsp;&nbsp;-->
+
     <div class="success pui-grid-col-10">Consultorias creadas...  
-        <select name="con_eje" id="con_eje" 
-                class="form-control" >
+        <select id="con_eje" name="con_eje" class="form-control">
             <option value="" selected>Seleccione una consultoría...</option>
             <?php
-            if ($stmt->rowCount() > 0) {
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    ?> <option value="<?php print(trim($row['id'])); ?>"><?php print(trim($row['nombre'])); ?></option>
-                    <?php
-                }
+            foreach ($crud_consultoria_consultores->getConsultoriasXConsultor($_SESSION["codigo_consultor"]) as $value) {
+                ?>
+                <option value = "<?php print($value['id']); ?>"><?php print($value['nombre']); ?></option>  
+
+                <?php
             }
             ?>
         </select>&nbsp;&nbsp;

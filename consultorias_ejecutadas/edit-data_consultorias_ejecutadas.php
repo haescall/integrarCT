@@ -2,7 +2,7 @@
 include_once '../config/dbconfig.php';
 if (isset($_POST['btn-update'])) {
     $id = $_GET['edit_id'];
-    $id_consultoria = $_GET['data-id-consultoria'];
+    $id_consultoria = $_POST['cod_consul'];
     $codigo_fase = $_POST['codigo_fase'];
     $fecha = $_POST['fecha'];
     $horas_laboradas = $_POST['horas_laboradas'];
@@ -23,6 +23,8 @@ if (isset($_POST['btn-update'])) {
 if (isset($_GET['edit_id'])) {
     $id = $_GET['edit_id'];
     extract($crud_consultorias_ejecutadas->getID($id));
+    $id_consultoria = $_GET['data-id-consultoria'];
+    
 }
 ?>
 <?php include_once 'header.php'; ?>
@@ -55,6 +57,29 @@ if (isset($_GET['edit_id'])) {
                     </div>
                 </td>
             </tr>
+
+            <tr class="success">
+                <td>Consultoría</td>
+                <td>
+                    <select id="cod_consul" name="cod_consul" class="form-control" required>
+                        <option value="" selected>Seleccione una consultoría...</option>
+                        <?php
+                        foreach ($crud_consultoria_consultores->getConsultoriasXConsultor($_SESSION["codigo_consultor"]) as $value) {
+                            if ($value['id'] == $id_consultoria) {
+                                ?>
+                                <option value="<?php echo $id_consultoria; ?>" selected>
+                                    <?php print($value['descripcion']); ?></option>
+                            <?php } else { ?>
+                                <option value = "<?php print($value['id']); ?>">
+                                    <?php print($value['nombre']); ?></option>  
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+
 
             <?php
             $stmt = $DB_con->prepare("SELECT id, descripcion FROM fases");

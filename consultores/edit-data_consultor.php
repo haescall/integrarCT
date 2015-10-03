@@ -2,7 +2,7 @@
 include_once '../config/dbconfig.php';
 if(isset($_POST['btn-update']))
 {
-	$id = $_GET['edit_id'];
+    $id = $_GET['edit_id'];
     $tipo_documento = $_POST['tipo_documento'];
     $documento = $_POST['documento'];
     $nombres = $_POST['nombres'];
@@ -115,10 +115,36 @@ if(isset($msg))
                     <option value="I">INACTIVO</option>
                 </select>
             </td>
+        
+        <?php
+            $stmt = $DB_con->prepare("SELECT email FROM users where email not in (select email_contacto from consultor) ");
+            $stmt->execute();
+            ?>
+            
         <tr class="success">
             <td>Email Contacto</td>
-            <td><input type='text' name='email_contacto' class='form-control' value="<?php echo $email_contacto; ?>" required></td>
+            <td>
+                <select name="email_contacto" class="form-control" required>
+                    <option value="" selected>Seleccione una email...</option>
+                    <?php
+                    if($stmt->rowCount()>0)
+                    {
+                        while($row=$stmt->fetch(PDO::FETCH_ASSOC)){ ?>
+
+                            <?php if ($email_contacto != "") { ?>
+                                <option value="<?php echo $email_contacto; ?>" selected><?php echo $email_contacto; ?></option>
+                            <?php  }
+                                  if ($row['email'] != $email_contacto) { ?>
+                                     <option value="<?php print($row['email']); ?>"> <?php print($row['email']); ?> </option>
+                        <?php }   }
+                    }
+                    ?>
+
+                </select>
+            </td>
         </tr>
+            
+            
         <tr>
             <td colspan="2">
                 <button type="submit" class="btn btn-primary" name="btn-update">

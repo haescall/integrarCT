@@ -37,9 +37,9 @@ class crud_consultor
                                       )");
 
             $stmt->bindparam(":tipo_documento",$tipo_documento);
-			$stmt->bindparam(":documento",$documento);
-			$stmt->bindparam(":nombres",$nombres);
-			$stmt->bindparam(":apellidos",$apellidos);
+	    $stmt->bindparam(":documento",$documento);
+	    $stmt->bindparam(":nombres",$nombres);
+	    $stmt->bindparam(":apellidos",$apellidos);
             $stmt->bindparam(":cargo",$cargo);
             $stmt->bindparam(":telefono",$telefono);
             $stmt->bindparam(":direccion",$direccion);
@@ -58,7 +58,8 @@ class crud_consultor
 		}
 		
 	}
-	
+      
+                
 	public function getID($id)
 	{
 		$stmt = $this->db->prepare("SELECT * FROM consultor WHERE id=:id");

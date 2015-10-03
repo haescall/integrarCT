@@ -22,6 +22,7 @@ include_once '../presupuesto_consultorias/class.crud_presupuesto_consultoria.php
 include_once '../consultorias_ejecutadas/class.crud_consultorias_ejecutadas.php';
 include_once '../facturacion_consultoria/class.crud_facturacion_consultoria.php';
 include_once '../gastos_consultoria/class.crud_gastos_consultoria.php';
+include_once '../usuarios/class.crud_usuarios.php';
 
 $crud_clientes = new crud_clientes($DB_con);
 $crud_fases = new crud_fases($DB_con);
@@ -32,6 +33,7 @@ $crud_consultorias_ejecutadas = new crud_consultorias_ejecutadas($DB_con);
 $crud_presupuesto_consultoria = new crud_presupuesto_consultoria($DB_con);
 $crud_facturacion_consultoria = new crud_facturacion_consultoria($DB_con);
 $crud_gastos_consultoria = new crud_gastos_consultoria($DB_con);
+$crud_usuario = new crud_usuarios($DB_con);
 
 //$_SESSION["codigo_consultor"] = 1;
 

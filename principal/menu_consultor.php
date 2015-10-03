@@ -28,6 +28,7 @@
                                 <li><a href="#">Cambio de Contraseña</a></li>
                             </ul>
                         </li>
+                        <li><a href="../desconectar.php">Cerrar Sesión</a></li>
                     </ul>
                 </div>
             </div>

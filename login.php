@@ -36,12 +36,15 @@
             <div class="modal-body">
 
                 <!--FORMULARIO -->
-                <form class="form col-md-12 center-block" method="POST" action="acceso.php" name="frm_ingreso">
+                <form class="form col-md-12 center-block" method="POST" 
+                      action="principal/acceso.php" name="frm_ingreso">
                   <div class="form-group">
-                    <input type="text" class="form-control input-lg" placeholder="Email" name = "email">
+                      <input type="text" class="form-control input-lg" required="true"
+                           placeholder="Email" name = "email">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control input-lg" placeholder="Password" name ="password">
+                      <input type="password" class="form-control input-lg" required="true"
+                           placeholder="Password" name ="password">
                   </div>
                   <div class="form-group">
                     <button class="btn btn-primary btn-lg btn-block">Conectar</button>              

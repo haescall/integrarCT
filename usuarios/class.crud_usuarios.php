@@ -39,7 +39,10 @@ class crud_usuarios {
 
     public function validarUsuario($email, $password) {
         try {
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE email=:email AND password=:password");
+            //$stmt = $this->db->prepare("SELECT * FROM users WHERE email=:email AND password=:password");
+            $stmt = $this->db->prepare("SELECT a.id, a.password, a.codigo_rol," . 
+                    " b.id codigo_consultor, a.email FROM users a, consultor b WHERE " . 
+                    " a.email=b.email_contacto AND a.email=:email AND a.password=:password");
             $stmt->bindparam(":email", $email);
             $stmt->bindparam(":password", $password);
             $stmt->execute();

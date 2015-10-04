@@ -21,10 +21,10 @@ $pass = $_POST['password'];
 
 $usuario = $crud_usuario->validarUsuario($email, $pass);
 
-//print 'el usuario es  : ' . $usuario['email'];
+print 'el usuario es  : ' . $usuario['email'];
 if ($usuario['email'] == "") {
     //print 'el email es : ' . $usuario['email'];
-    header("location:../login.php");
+    //header("location:../login.php");
 }
 //Si el usuario si existe en la BD
 else {
@@ -32,6 +32,7 @@ else {
     $_SESSION['id_usuario'] = $usuario['id'];
     $_SESSION['email'] = $usuario['email'];
     $_SESSION['codigo_rol'] = $usuario['codigo_rol'];
+    $_SESSION['codigo_consultor'] = $usuario['codigo_consultor'];
     header("location:index.php");
 }
 

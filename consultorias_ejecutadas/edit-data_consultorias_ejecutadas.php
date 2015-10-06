@@ -9,7 +9,7 @@ if (isset($_POST['btn-update'])) {
     $valor = $_POST['valor'];
     $actividades = $_POST['actividades'];
 
-    if ($crud_consultorias_ejecutadas->update($id, $codigo_fase, $fecha, $horas_laboradas, $valor, $actividades)) {
+    if ($crud_consultorias_ejecutadas->update($id, $id_consultoria, $codigo_fase, $fecha, $horas_laboradas, $valor, $actividades)) {
         $msg = "<div class='alert alert-info'>
 			La Consultoría ejecutada fue actualizada correctamente <a href='consultorias_ejecutadas.php'>RETORNAR A CONSULTORÍAS EJECUTADAS</a>!
 			</div>";
@@ -24,7 +24,6 @@ if (isset($_GET['edit_id'])) {
     $id = $_GET['edit_id'];
     extract($crud_consultorias_ejecutadas->getID($id));
     $id_consultoria = $_GET['data-id-consultoria'];
-    
 }
 ?>
 <?php include_once 'header.php'; ?>
@@ -67,11 +66,9 @@ if (isset($_GET['edit_id'])) {
                         foreach ($crud_consultoria_consultores->getConsultoriasXConsultor($_SESSION["codigo_consultor"]) as $value) {
                             if ($value['id'] == $id_consultoria) {
                                 ?>
-                                <option value="<?php echo $id_consultoria; ?>" selected>
-                                    <?php print($value['descripcion']); ?></option>
+                                <option value="<?php echo $id_consultoria; ?>" selected><?php print($value['nombre']); ?></option>
                             <?php } else { ?>
-                                <option value = "<?php print($value['id']); ?>">
-                                    <?php print($value['nombre']); ?></option>  
+                                <option value = "<?php print($value['id']); ?>"><?php print($value['nombre']); ?></option>  
                                 <?php
                             }
                         }
@@ -134,7 +131,13 @@ if (isset($_GET['edit_id'])) {
                     <button type="submit" class="btn btn-primary" name="btn-update">
                         <span class="glyphicon glyphicon-edit"></span>  Actualizar registro de la consultoría
                     </button>
-                    <a href="consultorias_ejecutadas.php" class="btn btn-large btn-success">
+                    <!--<a  href="javascript:window.history.back();" 
+                        onclick="getEjecucionesXConsultoria();" 
+                        class="btn btn-large btn-success">
+                        <i class="glyphicon glyphicon-backward"></i> &nbsp; CANCELAR</a>-->
+
+                    <a href="consultorias_ejecutadas.php?consultoria_id=<?php echo $id_consultoria ?>" 
+                       class="btn btn-large btn-success">
                         <i class="glyphicon glyphicon-backward"></i> &nbsp; CANCELAR</a>
                 </td>
             </tr>

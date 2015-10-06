@@ -72,14 +72,17 @@ class crud_consultorias_ejecutadas {
         }
     }
 
-    public function update($id, $codigo_fase, $fecha, $horas_laboradas, $valor, $actividades) {
+    public function update($id, $codigo_consultoria, $codigo_fase, $fecha, $horas_laboradas, $valor, $actividades) {
         try {
-            $stmt = $this->db->prepare("UPDATE consultorias_ejecutadas SET codigo_fase = :codigo_fase,
-                                                                                     fecha =:fecha,
-                                                                                     horas_laboradas =:horas_laboradas,
-                                                                                     valor = :valor,
-                                                                                     actividades = :actividades
-										     WHERE id=:id ");
+            $stmt = $this->db->prepare("UPDATE consultorias_ejecutadas SET 
+                codigo_consultoria = :codigo_consultoria, 
+                codigo_fase = :codigo_fase,
+                fecha =:fecha,
+                horas_laboradas =:horas_laboradas,
+                valor = :valor,
+                actividades = :actividades 
+                WHERE id=:id ");
+            $stmt->bindparam(":codigo_consultoria", $codigo_consultoria);
             $stmt->bindparam(":codigo_fase", $codigo_fase);
             $stmt->bindparam(":fecha", $fecha);
             $stmt->bindparam(":horas_laboradas", $horas_laboradas);

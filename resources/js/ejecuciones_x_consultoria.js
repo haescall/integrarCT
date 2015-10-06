@@ -18,8 +18,9 @@ function getEjecucionesXConsultoria() {
         //alert('opcion ' + $(this).text() + ' valor ' + $(this).attr('value'));
     });
 
-    //consultoria_id = $(this).val();
-    //alert("El id de la consultoria es : " + consultoria_id);
+
+//consultoria_id = $(this).val();
+//alert("El id de la consultoria es : " + consultoria_id);
 
     $.getJSON("/integrarCT/consultorias_ejecutadas/ejecuciones_x_consultoria_ajax.php",
             {
@@ -39,8 +40,8 @@ function mostrarEjecucionesXConsultoria(data) {
                     "<td>" + data[i].valor + " </td><td>" + data[i].actividades + " </td>";
 
             //alert("El valor de si tiene ejecuciones es : " + data[i].ejecuto);
-            filas += "<td align=\"center\"><a href=\"edit-data_consultorias_ejecutadas.php?edit_id="+
-                    data[i].id + "&data-id-consultoria="+ consultoria_id + " \"" +
+            filas += "<td align=\"center\"><a href=\"edit-data_consultorias_ejecutadas.php?edit_id=" +
+                    data[i].id + "&data-id-consultoria=" + consultoria_id + " \"" +
                     " title=\"Editar Registro\">" +
                     "<i class=\"glyphicon glyphicon-edit\"></i></a></td>";
 
@@ -74,8 +75,12 @@ function setCodigoConsultoria() {
     //$("#cod_consul > option[value='" + consultoria_id + "']").attr('selected', 'selected');
     //consultoria_id = $(this).val();
     //alert("El id de la consultoria es : " + consultoria_id);
-
 }
+
+/*function setCodigoConsultoriaDesdeEdit() {
+ consultoriaIdDesdeEdit = $(this).attr("data-id-cons-edit");
+ alert("El edit es: " + consultoriaIdDesdeEdit);
+ }*/
 
 
 /*function onloadPrimeUI() {

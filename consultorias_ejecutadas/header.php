@@ -5,10 +5,11 @@
         <title>Consultorías Ejecutadas</title>
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="../bootstrap/css/bootstrap-datepicker.css">
-        <link rel="stylesheet" href="../resources/primeui-2.1/themes/bluesky/theme.css">
+        <!--<link rel="stylesheet" href="../resources/primeui-2.1/themes/bluesky/theme.css">-->
         <link rel="stylesheet" href="../resources/jqueryui/css/jquery-ui.min.css">
         <link rel="stylesheet" href="../resources/font-awesome-4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../resources/primeui-2.1/production/primeui-2.1-min.css">
+        <link rel="stylesheet" href="../resources/css/integrarct.css">
 
         <!-- Load jQuery and bootstrap datepicker scripts -->
         <script src="../bootstrap/js/jquery.min.js"></script>
@@ -23,6 +24,7 @@
 
                 //$("#con_eje").change(getEjecucionesXConsultoria);
                 $("#find-ejec").click(getEjecucionesXConsultoria);
+                //$("#href_edit_cons_eje").click(setCodigoConsultoriaDesdeEdit);
                 $('#fecha').datepicker({
                     format: "yyyy/mm/dd"
                 });
@@ -48,7 +50,7 @@
 
     </head>
 
-    <body>
+    <body onload="getEjecucionesXConsultoria();">
 
         <div class="container">
             <div class="alert alert-info">

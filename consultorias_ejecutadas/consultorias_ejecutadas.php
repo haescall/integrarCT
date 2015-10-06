@@ -1,6 +1,6 @@
 <?php
 include_once '../config/dbconfig.php';
-$_SESSION["codigo_consultor"] = 1;
+//$_SESSION["codigo_consultor"] = 1;
 ?>
 <?php include_once 'header.php'; ?>
 
@@ -38,23 +38,31 @@ $_SESSION["codigo_consultor"] = 1;
     ?>
          </select>&nbsp;&nbsp;-->
 
-    <div class="success pui-grid-col-10">Consultorias creadas...  
-        <select id="con_eje" name="con_eje" class="form-control">
-            <option value="" selected>Seleccione una consultoría...</option>
-            <?php
-            foreach ($crud_consultoria_consultores->getConsultoriasXConsultor($_SESSION["codigo_consultor"]) as $value) {
-                ?>
-                <option value = "<?php print($value['id']); ?>"><?php print($value['nombre']); ?></option>  
-
+    <div class="row">
+        <div class="col-md-11">
+            <select id="con_eje" name="con_eje" class="form-control">
+                <option value="" selected>Seleccione una consultoría...</option>
                 <?php
-            }
-            ?>
-        </select>&nbsp;&nbsp;
-        <button id="find-ejec" type="button" class="btn btn-default glyphicon glyphicon-search"/>
+                foreach ($crud_consultoria_consultores->getConsultoriasXConsultor($_SESSION["codigo_consultor"]) as $value) {
+                    if ($value['id'] == $_GET['consultoria_id']) {
+                        ?>
+                        <option value="<?php echo $_GET['consultoria_id']; ?>" selected><?php print($value['nombre']); ?></option>
+                    <?php } else { ?>
+                        <option value = "<?php print($value['id']); ?>"><?php print($value['nombre']); ?></option>  
+                        <?php
+                    }
+                }
+                ?>
+            </select>
+
+        </div>
+        <div  class="col-md-1">
+            <button id="find-ejec" type="button" 
+                    title="Buscar trabajo realizado en la consultoría" 
+                    class="btn btn-default glyphicon glyphicon-search"/>
+        </div>
     </div>
-
-    </br></br>
-
+    </br>
     <div id="msg"></div>
     <table class='table table-bordered table-responsive'>
         <caption>Registro de horas y actividades...</caption>

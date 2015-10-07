@@ -24,7 +24,18 @@ function mensajeRespuesta(estado) {
     }
 }
 
-function confirmarCambio() {
-    confirmar = confirm("¿Estas seguro de proceder con la operación?");
+function confirmarAccion() {
+    /*$.confirm({
+     title: 'Confirmación de Acción!',
+     content: '¿Esta seguro de proceder con la operación?',
+     confirm: function () {
+     return true;
+     },
+     cancel: function () {
+     //alert('Canceled!')
+     }
+     });
+     return false;*/
+    confirmar = confirm("¿Esta seguro de proceder con la operación?");
     return confirmar;
 }

@@ -9,13 +9,17 @@
         <link rel="stylesheet" href="../resources/jqueryui/css/jquery-ui.min.css">
         <link rel="stylesheet" href="../resources/font-awesome-4.4.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="../resources/primeui-2.1/production/primeui-2.1-min.css">
+        <link rel="stylesheet" href="../resources/jquery-confirm/jquery-confirm.min.css">
         <link rel="stylesheet" href="../resources/css/integrarct.css">
 
         <!-- Load jQuery and bootstrap datepicker scripts -->
         <script src="../bootstrap/js/jquery.min.js"></script>
+        <!--<script type="text/javascript" src="../resources/js/jquery-1.5.min.js"></script>-->
         <script type="text/javascript" src="../resources/jqueryui/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="../resources/primeui-2.1/production/primeui-2.1-min.js"></script>
+        <!--<script type="text/javascript" src="../resources/jqueryui/js/jquery.ui.draggable.js"></script>-->
         <script src="../bootstrap/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript" src="../resources/jquery-confirm/jquery-confirm.min.js"></script>
         <script type="text/javascript" src="../resources/js/funciones_comunes.js"></script>
         <script type="text/javascript" src="../resources/js/ejecuciones_x_consultoria.js"></script>
         <script type="text/javascript" src="../resources/js/borrar_ejecucion_x_consultoria.js"></script>
@@ -33,16 +37,12 @@
             //alert(hasEventListener($(document), "change"));
 
             $(function () {
-                //$("#panelCons").puiaccordion();
                 $("#con_eje").puidropdown({
-                    //completeSource: countries,
                     filter: true
                 });
                 $("#cod_consul").puidropdown({
-                    //completeSource: countries,
                     filter: true
                 });
-                //$('#multiple').puiaccordion({multiple: true});
             });
 
 

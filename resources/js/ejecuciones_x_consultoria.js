@@ -47,14 +47,21 @@ function mostrarEjecucionesXConsultoria(data) {
 
             filas += "<td align=\"center\"><a href=\"#\" data-id-consecutivo=\"" +
                     data[i].id + "\" data-id-consultoria=\"" + consultoria_id + "\" " +
-                    "class=\"dlg_borrar_ejecucion\" title=\"Borrar ejecución\">" +
+                    "class=\"dlg_borrar_ejecucion\" title=\"Borrar registro\">" +
                     "<i class=\"glyphicon glyphicon-remove-circle\"></i></a></td></tr>";
         }
         $("#data").html(filas);
         $(".dlg_borrar_ejecucion").click(borrarEjecucionXConsultoria);
     } else {
         $("#data").html("");
-        alert("No se encontraron datos para la consultoría");
+        $.alert({
+            title: 'Alerta',
+            content: 'No se encontraron datos para la consultoría!',
+            confirm: function () {
+                //alert("No se encontraron datos para la consultoría");
+            }
+        });
+
 
     }
 }

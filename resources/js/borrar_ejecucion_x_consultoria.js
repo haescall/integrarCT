@@ -12,13 +12,30 @@ function borrarEjecucionXConsultoria() {
     //alert("El codigo del consultor es : " + consultor_id);
     //alert("El codigo de la consultoria es : " + consultoria_id);
 
-    if (confirmarCambio()) {
-        $.getJSON("/integrarCT/consultorias_ejecutadas/borrar_ejecucion_x_consultoria_ajax.php",
-                {
-                    id_consecutivo: consecutivo_id
-                },
-        respuestaBorrarEjecucion);
-    }
+
+    $.confirm({
+        title: 'Confirmar Acción!',
+        content: '¿Esta seguro de proceder con la operación?',
+        confirm: function () {
+            $.getJSON("/integrarCT/consultorias_ejecutadas/borrar_ejecucion_x_consultoria_ajax.php",
+                    {
+                        id_consecutivo: consecutivo_id
+                    },
+            respuestaBorrarEjecucion);
+        },
+        cancel: function () {
+            //alert('Canceled!')
+        }
+    });
+
+
+    /*if (confirmarAccion()) {
+     $.getJSON("/integrarCT/consultorias_ejecutadas/borrar_ejecucion_x_consultoria_ajax.php",
+     {
+     id_consecutivo: consecutivo_id
+     },
+     respuestaBorrarEjecucion);
+     }*/
 }
 
 function respuestaBorrarEjecucion(data) {

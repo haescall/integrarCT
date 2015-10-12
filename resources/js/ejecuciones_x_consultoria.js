@@ -40,16 +40,23 @@ function mostrarEjecucionesXConsultoria(data) {
                     "<td>" + data[i].valor + " </td><td>" + data[i].actividades + " </td>";
 
             //alert("El valor de si tiene ejecuciones es : " + data[i].ejecuto);
-            filas += "<td align=\"center\"><a href=\"edit-data_consultorias_ejecutadas.php?edit_id=" +
-                    data[i].id + "&data-id-consultoria=" + consultoria_id + " \"" +
-                    " title=\"Editar Registro\">" +
-                    "<i class=\"glyphicon glyphicon-edit\"></i></a></td>";
+            //alert("El valor del estado para modificacion es : " + data[i].estado);
+            if (data[i].estado > 0) {
+                filas += "<td align=\"center\"><a href=\"edit-data_consultorias_ejecutadas.php?edit_id=" +
+                        data[i].id + "&data-id-consultoria=" + consultoria_id + " \"" +
+                        " title=\"Editar Registro\">" +
+                        "<i class=\"glyphicon glyphicon-edit\"></i></a></td>";
 
-            filas += "<td align=\"center\"><a href=\"#\" data-id-consecutivo=\"" +
-                    data[i].id + "\" data-id-consultoria=\"" + consultoria_id + "\" " +
-                    "class=\"dlg_borrar_ejecucion\" title=\"Borrar registro\">" +
-                    "<i class=\"glyphicon glyphicon-remove-circle\"></i></a></td></tr>";
+                filas += "<td align=\"center\"><a href=\"#\" data-id-consecutivo=\"" +
+                        data[i].id + "\" data-id-consultoria=\"" + consultoria_id + "\" " +
+                        "class=\"dlg_borrar_ejecucion\" title=\"Borrar registro\">" +
+                        "<i class=\"glyphicon glyphicon-remove-circle\"></i></a></td></tr>";
+            } else {
+               filas += "<td></td><td></td></tr>";
+            }
+            
         }
+
         $("#data").html(filas);
         $(".dlg_borrar_ejecucion").click(borrarEjecucionXConsultoria);
     } else {

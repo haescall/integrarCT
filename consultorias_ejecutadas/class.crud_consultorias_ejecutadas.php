@@ -16,14 +16,16 @@ class crud_consultorias_ejecutadas {
                                                                                         fecha,
                                                                                         horas_laboradas,
                                                                                         valor,
-                                                                                        actividades
+                                                                                        actividades,
+                                                                                        created_at
                                       ) VALUES(         :codigo_fase,
                                                         :codigo_consultoria,
                                                         :codigo_consultor,
                                                         :fecha,
                                                         :horas_laboradas,
                                                         :valor,
-                                                        :actividades
+                                                        :actividades,
+                                                        CURDATE()
                                       )");
 
             $stmt->bindparam(":codigo_fase", $codigo_fase);
@@ -55,10 +57,10 @@ class crud_consultorias_ejecutadas {
             /* $stmt = $this->db->prepare("SELECT * FROM consultorias_ejecutadas "
               . "WHERE codigo_consultoria = " . $idConsultoria); */
             $stmt = $this->db->prepare("SELECT ce.id, ce.fecha, f.descripcion "
-                    . "fase, ce.horas_laboradas, ce.valor, ce.actividades  " .
+                    . "fase, ce.horas_laboradas, ce.valor, ce.actividades, valida_mod_eli_ejec(ce.id) estado  " .
                     " FROM consultorias_ejecutadas ce, fases f " .
                     " where ce.codigo_fase = f.id and ce.codigo_consultoria = "
-                    . $idConsultoria . " order by ce.fecha ;");
+                    . $idConsultoria . " order by ce.fecha;");
             $stmt->execute();
             $lista = array();
             $i = 0;
@@ -80,7 +82,8 @@ class crud_consultorias_ejecutadas {
                 fecha =:fecha,
                 horas_laboradas =:horas_laboradas,
                 valor = :valor,
-                actividades = :actividades 
+                actividades = :actividades,
+                updated_at = CURDATE()
                 WHERE id=:id ");
             $stmt->bindparam(":codigo_consultoria", $codigo_consultoria);
             $stmt->bindparam(":codigo_fase", $codigo_fase);

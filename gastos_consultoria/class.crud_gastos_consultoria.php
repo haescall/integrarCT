@@ -125,7 +125,7 @@ class crud_gastos_consultoria
 		{
 			?>
             <tr>
-            <td>No hay Gastos creados...</td>
+            <td colspan="9" align="center">No hay Gastos creados...</td>
             </tr>
             <?php
 		}

@@ -151,7 +151,7 @@ class crud_consultor
 		{
 			?>
             <tr>
-            <td>No hay Consultores creados...</td>
+            <td colspan="13" align="center">No hay Consultores creados...</td>
             </tr>
             <?php
 		}

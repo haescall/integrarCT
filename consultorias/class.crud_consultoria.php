@@ -142,7 +142,7 @@ class crud_consultoria {
         } else {
             ?>
             <tr>
-                <td>No hay Consultorías creadas...</td>
+                <td colspan="13" align="center">No hay Consultorías creadas...</td>
             </tr>
             <?php
         }

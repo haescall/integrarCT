@@ -158,7 +158,7 @@ class crud_clientes {
         } else {
             ?>
             <tr>
-                <td>No hay Clientes creados...</td>
+                <td colspan="18" align="center">No hay Clientes creados...</td>
             </tr>
             <?php
         }

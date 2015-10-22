@@ -4,13 +4,12 @@
 //mysql_select_db("integrarct", $conex) or die("ERROR con la base de datos");
 //Inicia una sesión para el usuario o la continua si ya está abierta
 //session_start();
-
 include_once '../config/dbconfig.php';
 
 //validar si está logueado actualmente
-if (!$_SESSION) {
-    header("location:../login.php");
-}
+/* if (!$_SESSION) {
+  header("location:../login.php");
+  } */
 ?>
 
 

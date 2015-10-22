@@ -119,7 +119,7 @@ class crud_facturacion_consultoria
 		{
 			?>
             <tr>
-            <td>No hay Facturaciones creadas...</td>
+            <td colspan="8" align="center">No hay Facturaciones creadas...</td>
             </tr>
             <?php
 		}

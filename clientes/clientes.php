@@ -6,7 +6,8 @@ include_once '../config/dbconfig.php';
 <div class="clearfix"></div>
 
 <div class="container">
-<a href="add-data_clientes.php" class="btn btn-large btn-info"><i class="glyphicon glyphicon-plus"></i> &nbsp; Crear Clientes</a>
+<a href="add-data_clientes.php" class="btn btn-large btn-info">
+    <i class="glyphicon glyphicon-plus"></i> &nbsp; Crear Clientes</a>
 </div>
 
 <div class="clearfix"></div><br />

@@ -1,9 +1,10 @@
 <?php
 
-include_once '../config/dbconfig.php';
+include '../config/dbconfig.php';
 
 $email = $_POST['email'];
 $pass = $_POST['password'];
+
 
 //if (isset($email)) {
 //conexion con la base de datos

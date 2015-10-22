@@ -100,7 +100,7 @@ class crud_fases
 		{
 			?>
             <tr>
-            <td>No hay Fases creadas...</td>
+            <td colspan="7" align="center">No hay Fases creadas...</td>
             </tr>
             <?php
 		}

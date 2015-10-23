@@ -25,7 +25,7 @@ $usuario = $crud_usuario->validarUsuario($email, $pass);
 //print 'el usuario es  : ' . $usuario['email'];
 if ($usuario['email'] == "") {
     //print 'el email es : ' . $usuario['email'];
-    //header("location:../login.php");
+    header("location:../login.php");
 }
 //Si el usuario si existe en la BD
 else {

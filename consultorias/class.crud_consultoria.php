@@ -10,7 +10,7 @@ class crud_consultoria {
 
     public function create($nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO Consultoria(
+            $stmt = $this->db->prepare("INSERT INTO consultoria(
                                                             nombre,
                                                             descripcion,
                                                             fecha_inicio,
@@ -142,7 +142,7 @@ class crud_consultoria {
         } else {
             ?>
             <tr>
-                <td colspan="13" align="center">No hay Consultorías creadas...</td>
+                <td colspan="14" align="center">No hay Consultorías creadas...</td>
             </tr>
             <?php
         }

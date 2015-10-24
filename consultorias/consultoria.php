@@ -38,7 +38,7 @@ include_once 'header.php';
         $crud_consultoria->dataview($newquery);
         ?>
         <tr>
-            <td colspan="13" align="center">
+            <td colspan="14" align="center">
                 <div class="pagination-wrap">
                     <?php $crud_consultoria->paginglink($query, $records_per_page); ?>
                 </div>

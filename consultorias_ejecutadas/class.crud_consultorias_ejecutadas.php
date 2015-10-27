@@ -74,6 +74,33 @@ class crud_consultorias_ejecutadas {
         }
     }
 
+    public function horasReportadasConsultor($fechaIni, $fechaFin, $consultorID) {
+        try {
+            $stmt = $this->db->prepare("SELECT a.id, concat(a.nombres, a.apellidos) consultor, "
+                    . "b.fecha, dia_en_texto(b.fecha) as dia, c.razon_social cliente, "
+                    . "b.horas_laboradas, b.actividades, "
+                    . "total_horas_consultor(a.id, STR_TO_DATE('" . $fechaIni ."','%Y-%m-%d'), "
+                    . "STR_TO_DATE('" . $fechaFin ."','%Y-%m-%d')) total_horas from consultor a, "
+                    . "consultorias_ejecutadas b, cliente c, consultoria d "
+                    . "where a.id = b.codigo_consultor and c.id = d.codigo_cliente "
+                    . "and b.codigo_consultoria = d.id and DATE_FORMAT(b.fecha ,'%Y-%m-%d') "
+                    . "between STR_TO_DATE('" . $fechaIni ."','%Y-%m-%d') "
+                    . "and STR_TO_DATE('" . $fechaFin ."','%Y-%m-%d') order by b.fecha;");
+            //$stmt = $this->db->prepare("SELECT * FROM consultorias_ejecutadas;");
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+                //echo $i;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function update($id, $codigo_consultoria, $codigo_fase, $fecha, $horas_laboradas, $valor, $actividades) {
         try {
             $stmt = $this->db->prepare("UPDATE consultorias_ejecutadas SET 
@@ -167,31 +194,32 @@ class crud_consultorias_ejecutadas {
 
         if ($total_no_of_records > 0) {
             ?><ul class="pagination"><?php
-                $total_no_of_pages = ceil($total_no_of_records / $records_per_page);
-                $current_page = 1;
-                if (isset($_GET["page_no"])) {
-                    $current_page = $_GET["page_no"];
+            $total_no_of_pages = ceil($total_no_of_records / $records_per_page);
+            $current_page = 1;
+            if (isset($_GET["page_no"])) {
+                $current_page = $_GET["page_no"];
+            }
+            if ($current_page != 1) {
+                $previous = $current_page - 1;
+                echo "<li><a href='" . $self . "?page_no=1'>Primero</a></li>";
+                echo "<li><a href='" . $self . "?page_no=" . $previous . "'>Anterior</a></li>";
+            }
+            for ($i = 1; $i <= $total_no_of_pages; $i++) {
+                if ($i == $current_page) {
+                    echo "<li><a href='" . $self . "?page_no=" . $i . "' style='color:red;'>" . $i . "</a></li>";
+                } else {
+                    echo "<li><a href='" . $self . "?page_no=" . $i . "'>" . $i . "</a></li>";
                 }
-                if ($current_page != 1) {
-                    $previous = $current_page - 1;
-                    echo "<li><a href='" . $self . "?page_no=1'>Primero</a></li>";
-                    echo "<li><a href='" . $self . "?page_no=" . $previous . "'>Anterior</a></li>";
-                }
-                for ($i = 1; $i <= $total_no_of_pages; $i++) {
-                    if ($i == $current_page) {
-                        echo "<li><a href='" . $self . "?page_no=" . $i . "' style='color:red;'>" . $i . "</a></li>";
-                    } else {
-                        echo "<li><a href='" . $self . "?page_no=" . $i . "'>" . $i . "</a></li>";
-                    }
-                }
-                if ($current_page != $total_no_of_pages) {
-                    $next = $current_page + 1;
-                    echo "<li><a href='" . $self . "?page_no=" . $next . "'>Siguiente</a></li>";
-                    echo "<li><a href='" . $self . "?page_no=" . $total_no_of_pages . "'>Último</a></li>";
-                }
-                ?></ul><?php
+            }
+            if ($current_page != $total_no_of_pages) {
+                $next = $current_page + 1;
+                echo "<li><a href='" . $self . "?page_no=" . $next . "'>Siguiente</a></li>";
+                echo "<li><a href='" . $self . "?page_no=" . $total_no_of_pages . "'>Último</a></li>";
+            }
+            ?></ul><?php
+            }
         }
-    }
 
-    /* paging */
-}
+        /* paging */
+    }
+    

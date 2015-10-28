@@ -80,6 +80,8 @@ if (isset($_POST['btn-reporte'])) {
     $objActSheet->setCellValue($columnas[5] . $fila5, 'Labor Realizada');
     $objActSheet->setCellValue($columnas[6] . $fila5, 'Totales');
 
+    
+    //Fondo a los emcabezados
     foreach ($columnas as $value) {
         $objActSheet
                 ->getStyle($value . $fila5)

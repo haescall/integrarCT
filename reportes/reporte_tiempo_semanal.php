@@ -1,6 +1,7 @@
 <?php
 include_once '../config/dbconfig.php';
 require_once '../librerias/ExcelPHP/PHPExcel.php';
+require_once '../librerias/UtilExcelPHP.php';
 
 if (isset($_POST['btn-reporte'])) {
     $fecha_inicial = $_POST['fecha_inicial'];
@@ -23,7 +24,7 @@ if (isset($_POST['btn-reporte'])) {
             ->setKeywords("Excel Office 2007 openxml php")
             ->setCategory("Reporte Horas Semanales");
 
-//    /Variables reutilizables 
+//    /Variables del reporte 
     $columnas = array(0 => "A",
         1 => "B",
         2 => "C",
@@ -32,30 +33,62 @@ if (isset($_POST['btn-reporte'])) {
         5 => "F",
         6 => "G");
     $fila1 = 1;
-
+    $fila5 = 5;
+    //$fila6 = 6;
 // Agregar Informacion
     $objPHPExcel->setActiveSheetIndex(0);
     $objActSheet = $objPHPExcel->getActiveSheet();
     $objActSheet->setTitle($fecha_inicial . ' hasta ' . $fecha_final);
 
+    //Titulo del reporte
+    UtilExcelPHP::mergeCeldas($objActSheet, $columnas[0] . $fila1, $columnas[3] . '4');
+    $objActSheet->setCellValue($columnas[0] . $fila1, "REPORTE DE TIEMPOS SEMANALES\rDESDE " .
+            $fecha_inicial . ' HASTA ' . $fecha_final);
+    $objActSheet->getStyle($columnas[0] . $fila1)
+            ->getFont()->applyFromArray(
+            array(
+                'bold' => true,
+                'name' => 'Arial',
+                'size' => 15,
+                'color' => array(
+                    'rgb' => 'FF0000FF'
+                )
+            )
+    );
+    //->setColor(PHPExcel_Style_Color::COLOR_BLUE);
+    //Logo de la empresa
+    UtilExcelPHP::mergeCeldas($objActSheet, 'E1', 'G4');
+    $objDrawing = new PHPExcel_Worksheet_Drawing();
+    $objDrawing->setName('IntegrarCT');
+    $objDrawing->setDescription('Logo IntegrarCT');
+    $objDrawing->setPath($_SERVER['DOCUMENT_ROOT'] . '/integrarCT/resources/img/logo_reporte.png');
+    $objDrawing->setHeight(70);
+    $objDrawing->setCoordinates('E1');
+    //$objDrawing->setOffsetX(10);
+    //$objDrawing->setRotation(15);
+    $objDrawing->getShadow()->setVisible(true);
+    $objDrawing->getShadow()->setDirection(70);
+    $objDrawing->setWorksheet($objActSheet);
+
+
 //Titulos o Emcabezados de Columna
-    $objActSheet->setCellValue($columnas[0] . $fila1, 'Consultor');
-    $objActSheet->setCellValue($columnas[1] . $fila1, 'Fecha');
-    $objActSheet->setCellValue($columnas[2] . $fila1, 'Día');
-    $objActSheet->setCellValue($columnas[3] . $fila1, 'Cliente');
-    $objActSheet->setCellValue($columnas[4] . $fila1, 'Horas');
-    $objActSheet->setCellValue($columnas[5] . $fila1, 'Labor Realizada');
-    $objActSheet->setCellValue($columnas[6] . $fila1, 'Totales');
+    $objActSheet->setCellValue($columnas[0] . $fila5, 'Consultor');
+    $objActSheet->setCellValue($columnas[1] . $fila5, 'Fecha');
+    $objActSheet->setCellValue($columnas[2] . $fila5, 'Día');
+    $objActSheet->setCellValue($columnas[3] . $fila5, 'Cliente');
+    $objActSheet->setCellValue($columnas[4] . $fila5, 'Horas');
+    $objActSheet->setCellValue($columnas[5] . $fila5, 'Labor Realizada');
+    $objActSheet->setCellValue($columnas[6] . $fila5, 'Totales');
 
     foreach ($columnas as $value) {
         $objActSheet
-                ->getStyle($value . $fila1)
+                ->getStyle($value . $fila5)
                 ->getFill()
                 ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
                 ->getStartColor()
                 ->setRGB('0000CC');
 
-        $objActSheet->getStyle($value . $fila1)
+        $objActSheet->getStyle($value . $fila5)
                 ->getFont()
                 ->setBold(true)
                 ->setName('Verdana')
@@ -63,7 +96,7 @@ if (isset($_POST['btn-reporte'])) {
                 ->getColor()->setRGB('FFFFFF');
     }
 
-    $i = 2;
+    $i = 1;
     $celdaIniMerge = "";
     $celdaFinMerge = "";
     $idAnterior = "";
@@ -72,42 +105,46 @@ if (isset($_POST['btn-reporte'])) {
         //echo $numRegistros;
         //echo $value['consultor'];
 
-        $objActSheet->setCellValue($columnas[0] . $i, utf8_encode($value['consultor']));
-        $objActSheet->setCellValue($columnas[1] . $i, $value['fecha']);
-        $objActSheet->setCellValue($columnas[2] . $i, utf8_encode($value['dia']));
-        $objActSheet->setCellValue($columnas[3] . $i, utf8_encode($value['cliente']));
-        $objActSheet->setCellValue($columnas[4] . $i, $value['horas_laboradas']);
-        $objActSheet->setCellValue($columnas[5] . $i, utf8_encode($value['actividades']));
-        $objActSheet->setCellValue($columnas[6] . $i, $value['total_horas']);
+        $filaData = $i + $fila5;
+        $objActSheet->setCellValue($columnas[0] . $filaData, utf8_encode($value['consultor']));
+        $objActSheet->setCellValue($columnas[1] . $filaData, $value['fecha']);
+        $objActSheet->setCellValue($columnas[2] . $filaData, utf8_encode($value['dia']));
+        $objActSheet->setCellValue($columnas[3] . $filaData, utf8_encode($value['cliente']));
+        $objActSheet->setCellValue($columnas[4] . $filaData, $value['horas_laboradas']);
+        $objActSheet->setCellValue($columnas[5] . $filaData, utf8_encode($value['actividades']));
+        $objActSheet->setCellValue($columnas[6] . $filaData, $value['total_horas']);
 
-
-        if ($i == 2) {
+        /*
+         * Permite determinar en que momento hace el merge de las celdas de nombre
+         * del consultor y de los totales, esto para un mejor visualizacion del
+         * reporte
+         */
+        if ($i == 1) {
             $idAnterior = $value['id'];
-            $celdaIniMerge = $columnas[0] . $i;
+            $celdaIniMerge = $columnas[0] . $filaData;
+            $celdaTotalIniMerge = $columnas[6] . $filaData;
+            //echo $celdaIniMerge . ':' . $celdaFinMerge;
         } else if ($value['id'] != $idAnterior) {
-            $celdaFinMerge = $columnas[0] . $i - 1;
-            $objActSheet->mergeCells($celdaIniMerge . ':' . $celdaFinMerge);
-            $$objActSheet->getStyle($celdaIniMerge)->getAlignment()->applyFromArray(
-                    array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,));
+            $celdaFinMerge = $columnas[0] . $filaData - 1;
+            $celdaFinTotalMerge = $columnas[6] . $filaData - 1;
+            //echo $celdaIniMerge . ':' . $celdaFinMerge;
+            UtilExcelPHP::mergeCeldas($objActSheet, $celdaIniMerge, $celdaFinMerge);
+            UtilExcelPHP::mergeCeldas($objActSheet, $celdaTotalIniMerge, $celdaFinTotalMerge);
 
             $idAnterior = $value['id'];
-            $celdaIniMerge = $columnas[0] . $i;
-        } else if ($numRegistros == $i - 1) {
-            $celdaFinMerge = $columnas[0] . $i;
-            $objActSheet->mergeCells($celdaIniMerge . ':' . $celdaFinMerge);
-            $objActSheet->getStyle($celdaIniMerge)->getAlignment()->applyFromArray(
-                    array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,));
+            $celdaIniMerge = $columnas[0] . $filaData;
+            $celdaTotalIniMerge = $columnas[6] . $filaData;
+        } else if ($numRegistros == $i) {
+            $celdaFinMerge = $columnas[0] . $filaData;
+            $celdaFinTotalMerge = $columnas[6] . $filaData;
+            //echo $celdaIniMerge . ':' . $celdaFinMerge;
+            UtilExcelPHP::mergeCeldas($objActSheet, $celdaIniMerge, $celdaFinMerge);
+            UtilExcelPHP::mergeCeldas($objActSheet, $celdaTotalIniMerge, $celdaFinTotalMerge);
         }
 
         //echo $celdaIniMerge;
         $i++;
     }
-    /* $objActSheet->mergeCells('A2:A5');
-      $objActSheet->getStyle('A2')->getAlignment()->applyFromArray(
-      array('vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER,)
-      ); */
-    /* $objActSheet->getStyle('A5')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-      $objActSheet->getStyle('A5')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER); */
 
 //Establecer la anchura
     foreach (range('A', 'G') as $columnID) {

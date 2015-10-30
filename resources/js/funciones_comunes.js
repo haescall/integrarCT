@@ -39,3 +39,13 @@ function confirmarAccion() {
     confirmar = confirm("¿Esta seguro de proceder con la operación?");
     return confirmar;
 }
+
+function recargar() {
+    var host = window.location.host;
+    var pagina = "http://" + host + "/integrarCT/login.php";
+
+    if (self.parent.frames.length !== 0 &&
+            pagina !== window.location.host) {
+        self.parent.location = pagina;
+    }
+}

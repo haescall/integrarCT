@@ -6,6 +6,8 @@
 //session_start();
 include_once '../config/dbconfig.php';
 
+$inactivo = 900;
+$_SESSION['vida_session'] = time() + $inactivo;
 //validar si está logueado actualmente
 /* if (!$_SESSION) {
   header("location:../login.php");

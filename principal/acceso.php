@@ -34,6 +34,7 @@ else {
     $_SESSION['email'] = $usuario['email'];
     $_SESSION['codigo_rol'] = $usuario['codigo_rol'];
     $_SESSION['codigo_consultor'] = $usuario['codigo_consultor'];
+    //$_SESSION['tiempo'] = time();
     header("location:index.php");
 }
 

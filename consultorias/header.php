@@ -1,3 +1,7 @@
+<?php
+require_once '../principal/seguridadPHP.php';
+?>
+
 <!doctype html>
 <html lang="es">
     <head>

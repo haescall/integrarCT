@@ -1,31 +1,35 @@
+<?php
+require_once '../principal/seguridadPHP.php';
+?>
+
 <!doctype html>
 <html lang="es">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Facturación de las consultorias</title>
-<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap-datepicker.css">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Facturación de las consultorias</title>
+        <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="../bootstrap/css/bootstrap-datepicker.css">
 
-    <!-- Load jQuery and bootstrap datepicker scripts -->
-    <script src="../bootstrap/js/jquery.min.js"></script>
-    <script src="../bootstrap/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript">
-        // When the document is ready
-        $(document).ready(function () {
+        <!-- Load jQuery and bootstrap datepicker scripts -->
+        <script src="../bootstrap/js/jquery.min.js"></script>
+        <script src="../bootstrap/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript">
+            // When the document is ready
+            $(document).ready(function () {
 
-            $('#fecha').datepicker({
-                format: "yyyy/mm/dd"
+                $('#fecha').datepicker({
+                    format: "yyyy/mm/dd"
+                });
+
             });
+        </script>
 
-        });
-    </script>
+    </head>
 
-</head>
+    <body>
 
-<body>
-
-<div class="container">
-    <div class="alert alert-info">
-        <strong>Administración de Facturación</strong>
-    </div>
-</div>
+        <div class="container">
+            <div class="alert alert-info">
+                <strong>Administración de Facturación</strong>
+            </div>
+        </div>

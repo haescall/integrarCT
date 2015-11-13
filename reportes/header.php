@@ -32,8 +32,8 @@ require_once '../principal/seguridadPHP.php';
 
     <body>
 
-        <div class="container">
+        <!--<div class="container">
             <div class="alert alert-info">
                 <strong>Reporte de Horas Semanales</strong>
             </div>
-        </div>
+        </div>-->

@@ -25,4 +25,47 @@ class UtilExcelPHP {
         }
     }
 
+    public static function ponerLogo($objActSheet, $coordinate) {
+        $objDrawing = new PHPExcel_Worksheet_Drawing();
+        $objDrawing->setName('IntegrarCT');
+        $objDrawing->setDescription('Logo IntegrarCT');
+        $objDrawing->setPath($_SERVER['DOCUMENT_ROOT'] . '/integrarCT/resources/img/logo_reporte.png');
+        $objDrawing->setHeight(70);
+        $objDrawing->setCoordinates($coordinate);
+        //$objDrawing->setOffsetX(10);
+        //$objDrawing->setRotation(15);
+        $objDrawing->getShadow()->setVisible(true);
+        $objDrawing->getShadow()->setDirection(70);
+        $objDrawing->setWorksheet($objActSheet);
+    }
+
+    public static function estiloCelda($objActSheet, $columna, $fila, $bold, $tipoLetra, $size, $rgb) {
+        $objActSheet->getStyle($columna . $fila)
+                ->getFont()
+                ->setBold($bold)
+                ->setName($tipoLetra)
+                ->setSize($size)
+                ->getColor()->setRGB($rgb);
+        /* $objActSheet->getStyle($columna . $fila)
+          ->getFont()->applyFromArray(
+          array(
+          'bold' => $bold,
+          'name' => 'Arial',
+          'size' => 15,
+          'color' => array(
+          'rgb' => $rgb
+          )
+          )
+          ); */
+    }
+
+    public static function fondoCelda($objActSheet, $columna, $fila, $rgb) {
+        $objActSheet->
+                getStyle($columna . $fila)
+                ->getFill()
+                ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setRGB($rgb);
+    }
+
 }

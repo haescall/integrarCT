@@ -36,8 +36,10 @@
                                 <!--<li><a href="../presupuesto_consultorias/">Presupuesto Fases - Consultoría</a></li>-->
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Otros...</li>
-                                <li><a href="../facturacion_consultoria/facturacion_consultoria.php"  target="content">Facturación Consultorías</a></li>
-                                <li><a href="../gastos_consultoria/gastos_consultoria.php"  target="content">Gastos Consultoría</a></li>
+                                <li><a href="../facturacion_consultoria/facturacion_consultoria.php"  
+                                       target="content">Facturación Consultorías</a></li>
+                                <li><a href="../gastos_consultoria/gastos_consultoria.php"  
+                                       target="content">Gastos Consultoría</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -45,6 +47,17 @@
                             <ul class="dropdown-menu">
                                 <li><a href="#">Cambio de Contraseña</a></li>
                             </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../reportes/reporte_tiempo_semanal.php" 
+                                       target="content">Reporte de Tiempos Semanales</a></li>
+                                <li><a href="../reportes/reporte_det_consultor.php" 
+                                       target="content">Reporte Detallado Consultores</a></li>
+                            </ul>
+
                         </li>
                         <li><a href="../desconectar.php">Cerrar Sesión</a></li>
                     </ul>

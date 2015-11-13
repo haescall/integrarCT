@@ -7,24 +7,21 @@ if (isset($_POST['btn-reporte'])) {
     $fecha_inicial = $_POST['fecha_inicial'];
     $fecha_final = $_POST['fecha_final'];
 
-    /* echo $fecha_inicial;
-      echo $fecha_final; */
+    $lista = $crud_consultor->infoDetalladaConsultor($fecha_inicial, $fecha_final, 0);
 
-    $lista = $crud_consultorias_ejecutadas->horasReportadasConsultor($fecha_inicial, $fecha_final, 0);
-
-// Crea un nuevo objeto PHPExcel
+    //Crea un nuevo objeto PHPExcel
     $objPHPExcel = new PHPExcel();
 
-// Establecer propiedades
+    //Establecer propiedades
     $objPHPExcel->getProperties()->setCreator("Hanseld A. Escallon Ortiz")
             ->setLastModifiedBy("Hanseld A. Escallon Ortiz")
-            ->setTitle("Reporte Horas Semanales")
-            ->setSubject("Reporte Horas Semanales")
-            ->setDescription("Reporte Horas Semanales.")
+            ->setTitle("Reporte Detallado Consultores")
+            ->setSubject("Reporte Detallado Consultores")
+            ->setDescription("Reporte Detallado Consultores.")
             ->setKeywords("Excel Office 2007 openxml php")
-            ->setCategory("Reporte Horas Semanales");
+            ->setCategory("Reporte");
 
-//    /Variables del reporte 
+    //Variables del reporte 
     $columnas = array(0 => "A",
         1 => "B",
         2 => "C",
@@ -33,88 +30,91 @@ if (isset($_POST['btn-reporte'])) {
         5 => "F",
         6 => "G");
     $fila1 = 1;
-    $fila5 = 5;
-    //Agregar Informacion
+    $fila8 = 8;
+
+    // Agregar Informacion
     $objPHPExcel->setActiveSheetIndex(0);
     $objActSheet = $objPHPExcel->getActiveSheet();
     $objActSheet->setTitle($fecha_inicial . ' hasta ' . $fecha_final);
 
     //Estilo y titulo del reporte
     UtilExcelPHP::mergeCeldas($objActSheet, $columnas[0] . $fila1, $columnas[3] . '4');
-    $objActSheet->setCellValue($columnas[0] . $fila1, "REPORTE DE TIEMPOS SEMANALES\rDESDE " .
+    $objActSheet->setCellValue($columnas[0] . $fila1, "REPORTE DETALLADO DE CONSULTORES\rDESDE " .
             $fecha_inicial . ' HASTA ' . $fecha_final);
-
     UtilExcelPHP::estiloCelda($objActSheet, $columnas[0], $fila1, true, 'Arial', 15, 'FF0000FF');
 
     //Logo de la empresa
     UtilExcelPHP::mergeCeldas($objActSheet, 'E1', 'G4');
     UtilExcelPHP::ponerLogo($objActSheet, 'E1');
 
-    //Titulos o Emcabezados de Columna
-    $objActSheet->setCellValue($columnas[0] . $fila5, 'Consultor');
-    $objActSheet->setCellValue($columnas[1] . $fila5, 'Fecha');
-    $objActSheet->setCellValue($columnas[2] . $fila5, 'Día');
-    $objActSheet->setCellValue($columnas[3] . $fila5, 'Cliente');
-    $objActSheet->setCellValue($columnas[4] . $fila5, 'Horas');
-    $objActSheet->setCellValue($columnas[5] . $fila5, 'Labor Realizada');
-    $objActSheet->setCellValue($columnas[6] . $fila5, 'Totales');
+
+    //Titulos o Encabezados de Columna
+    $objActSheet->setCellValue($columnas[0] . $fila8, 'Codigo Cliente');
+    $objActSheet->setCellValue($columnas[1] . $fila8, 'Cliente');
+    $objActSheet->setCellValue($columnas[2] . $fila8, 'Descripcion');
+    $objActSheet->setCellValue($columnas[3] . $fila8, 'No.  Horas');
+    $objActSheet->setCellValue($columnas[4] . $fila8, 'Fase');
+    $objActSheet->setCellValue($columnas[5] . $fila8, 'Valor Actividad');
+    $objActSheet->setCellValue($columnas[6] . $fila8, 'Actividad Desarrollada');
 
 
-    //Fondo a los emcabezados
+    //Fondo a los encabezados y color de letra
     foreach ($columnas as $value) {
-        UtilExcelPHP::fondoCelda($objActSheet, $value, $fila5, '0000CC');
-        UtilExcelPHP::estiloCelda($objActSheet, $value, $fila5, true, 'Verdana', 10, 'FFFFFF');
+        UtilExcelPHP::fondoCelda($objActSheet, $value, $fila8, '0000CC');
+        UtilExcelPHP::estiloCelda($objActSheet, $value, $fila8, true, 'Verdana', 10, 'FFFFFF');
     }
 
     $i = 1;
     $celdaIniMerge = "";
     $celdaFinMerge = "";
     $idAnterior = "";
+    $filaData = 0;
     $numRegistros = count($lista);
 
-    //Recorrer y adicionar los datos al excel
+    //$objActSheet->setCellValue($columnas[0] . 6, $numRegistros);
+
     foreach ($lista as $value) {
-        //echo $numRegistros;
-        //echo $value['consultor'];
 
-        $filaData = $i + $fila5;
-        $objActSheet->setCellValue($columnas[0] . $filaData, utf8_encode($value['consultor']));
-        $objActSheet->setCellValue($columnas[1] . $filaData, $value['fecha']);
-        $objActSheet->setCellValue($columnas[2] . $filaData, utf8_encode($value['dia']));
-        $objActSheet->setCellValue($columnas[3] . $filaData, utf8_encode($value['cliente']));
-        $objActSheet->setCellValue($columnas[4] . $filaData, $value['horas_laboradas']);
-        $objActSheet->setCellValue($columnas[5] . $filaData, utf8_encode($value['actividades']));
-        $objActSheet->setCellValue($columnas[6] . $filaData, $value['total_horas']);
-
-        /*
-         * Permite determinar en que momento hace el merge de las celdas de nombre
-         * del consultor y de los totales, esto para un mejor visualizacion del
-         * reporte
-         */
         if ($i == 1) {
-            $idAnterior = $value['id'];
-            $celdaIniMerge = $columnas[0] . $filaData;
-            $celdaTotalIniMerge = $columnas[6] . $filaData;
-            //echo $celdaIniMerge . ':' . $celdaFinMerge;
-        } else if ($value['id'] != $idAnterior) {
-            $celdaFinMerge = $columnas[0] . $filaData - 1;
-            $celdaFinTotalMerge = $columnas[6] . $filaData - 1;
-            //echo $celdaIniMerge . ':' . $celdaFinMerge;
-            UtilExcelPHP::mergeCeldas($objActSheet, $celdaIniMerge, $celdaFinMerge);
-            UtilExcelPHP::mergeCeldas($objActSheet, $celdaTotalIniMerge, $celdaFinTotalMerge);
+            $idAnterior = $value['id_consultor'];
+            $objActSheet->setCellValue($columnas[0] . 6, "Consultor");
+            $objActSheet->setCellValue($columnas[1] . 6, $value['consultor']);
 
-            $idAnterior = $value['id'];
-            $celdaIniMerge = $columnas[0] . $filaData;
-            $celdaTotalIniMerge = $columnas[6] . $filaData;
-        } else if ($numRegistros == $i) {
-            $celdaFinMerge = $columnas[0] . $filaData;
-            $celdaFinTotalMerge = $columnas[6] . $filaData;
-            //echo $celdaIniMerge . ':' . $celdaFinMerge;
-            UtilExcelPHP::mergeCeldas($objActSheet, $celdaIniMerge, $celdaFinMerge);
-            UtilExcelPHP::mergeCeldas($objActSheet, $celdaTotalIniMerge, $celdaFinTotalMerge);
+            $filaData = $fila8;
+            //break;
         }
+        $filaData += 1;
 
-        //echo $celdaIniMerge;
+        if ($value['id_consultor'] == $idAnterior) {
+            $objActSheet->setCellValue($columnas[0] . $filaData, $value['cod_cliente']);
+            $objActSheet->setCellValue($columnas[1] . $filaData, utf8_encode($value['cliente']));
+            $objActSheet->setCellValue($columnas[2] . $filaData, utf8_encode($value['descripcion']));
+            $objActSheet->setCellValue($columnas[3] . $filaData, $value['horas_laboradas']);
+            $objActSheet->setCellValue($columnas[4] . $filaData, utf8_encode($value['nombre_fase']));
+            $objActSheet->setCellValue($columnas[5] . $filaData, $value['valor']);
+            $objActSheet->setCellValue($columnas[6] . $filaData, utf8_encode($value['actividades']));
+
+            if ($numRegistros == $i) {
+                $filaData += 2;
+
+                $objActSheet->setCellValue($columnas[1] . $filaData, "Total");
+                $objActSheet->setCellValue($columnas[3] . $filaData, $value['total_horas']);
+                $objActSheet->setCellValue($columnas[5] . $filaData, $value['total_valor']);
+
+
+                UtilExcelPHP::estiloCelda($objActSheet, $columnas[1], $filaData, true, 'Arial', 15, '000000');
+                UtilExcelPHP::estiloCelda($objActSheet, $columnas[3], $filaData, true, 'Arial', 15, '000000');
+                UtilExcelPHP::estiloCelda($objActSheet, $columnas[5], $filaData, true, 'Arial', 15, '000000');
+
+                break;
+            }
+        } else {
+            $filaData += 2;
+
+            $idAnterior = $value['id_consultor'];
+            $objActSheet->setCellValue($columnas[0] . $filaData, "Consultor");
+            $objActSheet->setCellValue($columnas[1] . $filaData, $value['consultor']);
+        }
         $i++;
     }
 
@@ -131,7 +131,7 @@ if (isset($_POST['btn-reporte'])) {
 
     //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8');
-    header('Content-Disposition: attachment;filename="reporteHorasSem.xlsx"');
+    header('Content-Disposition: attachment;filename="reporteDetConsultor.xlsx"');
     header('Cache-Control: max-age=0');
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     $objWriter->save('php://output');
@@ -144,7 +144,7 @@ if (isset($_POST['btn-reporte'])) {
 <div class="clearfix"></div><br />
 <div class="container">
     <div class="alert alert-info">
-        <strong>Reporte de Horas Semanales</strong>
+        <strong>Reporte Detallado Consultores</strong>
     </div>
     <form method='post'>
         <table class='table table-bordered'>

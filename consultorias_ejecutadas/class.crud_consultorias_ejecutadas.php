@@ -76,7 +76,7 @@ class crud_consultorias_ejecutadas {
 
     public function horasReportadasConsultor($fechaIni, $fechaFin, $consultorID) {
         try {
-            $stmt = $this->db->prepare("SELECT a.id, concat(a.nombres, a.apellidos) consultor, "
+            $stmt = $this->db->prepare("SELECT a.id, concat(a.nombres, '  ',  a.apellidos) consultor, "
                     . "b.fecha, dia_en_texto(b.fecha) as dia, c.razon_social cliente, "
                     . "b.horas_laboradas, b.actividades, "
                     . "total_horas_consultor(a.id, STR_TO_DATE('" . $fechaIni ."','%Y-%m-%d'), "

@@ -10,7 +10,7 @@ class crud_consultor {
 
     public function create($tipo_documento, $documento, $nombres, $apellidos, $cargo, $telefono, $direccion, $fecha_ingreso, $estado, $email_contacto) {
         try {
-            $stmt = $this->db->prepare("INSERT INTO Consultor(
+            $stmt = $this->db->prepare("INSERT INTO consultor(
                                                             tipo_documento,
                                                             documento,
                                                             nombres,

@@ -58,6 +58,27 @@ class UtilExcelPHP {
           )
           ); */
     }
+    
+    
+     public static function estiloCelda2($objActSheet, $celda, $bold, $tipoLetra, $size, $rgb) {
+        $objActSheet->getStyle($celda)
+                ->getFont()
+                ->setBold($bold)
+                ->setName($tipoLetra)
+                ->setSize($size)
+                ->getColor()->setRGB($rgb);
+        /* $objActSheet->getStyle($columna . $fila)
+          ->getFont()->applyFromArray(
+          array(
+          'bold' => $bold,
+          'name' => 'Arial',
+          'size' => 15,
+          'color' => array(
+          'rgb' => $rgb
+          )
+          )
+          ); */
+    }
 
     public static function fondoCelda($objActSheet, $columna, $fila, $rgb) {
         $objActSheet->

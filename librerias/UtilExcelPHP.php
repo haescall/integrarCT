@@ -68,4 +68,24 @@ class UtilExcelPHP {
                 ->setRGB($rgb);
     }
 
+    public static function fondoCelda2($objActSheet, $celda, $rgb) {
+        $objActSheet->
+                getStyle($celda)
+                ->getFill()
+                ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
+                ->getStartColor()
+                ->setRGB($rgb);
+    }
+
+    public static function formatoCeldaNumero($objActSheet, $celda) {
+        $objActSheet->getStyle($celda)->
+                getNumberFormat()->
+                setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+
+
+        /* $objActSheet->getStyle($celda)->
+          getNumberFormat()->
+          setFormatCode('#,##0.00'); */
+    }
+
 }

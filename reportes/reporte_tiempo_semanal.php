@@ -44,7 +44,7 @@ if (isset($_POST['btn-reporte'])) {
     $objActSheet->setCellValue($columnas[0] . $fila1, "REPORTE DE TIEMPOS SEMANALES\rDESDE " .
             $fecha_inicial . ' HASTA ' . $fecha_final);
 
-    UtilExcelPHP::estiloCelda($objActSheet, $columnas[0], $fila1, true, 'Arial', 15, 'FF0000FF');
+    UtilExcelPHP::estiloCelda($objActSheet, $columnas[0], $fila1, true, 'Arial', 15, '003366');
 
     //Logo de la empresa
     UtilExcelPHP::mergeCeldas($objActSheet, 'E1', 'G4');
@@ -62,7 +62,7 @@ if (isset($_POST['btn-reporte'])) {
 
     //Fondo a los emcabezados
     foreach ($columnas as $value) {
-        UtilExcelPHP::fondoCelda($objActSheet, $value, $fila5, '0000CC');
+        UtilExcelPHP::fondoCelda($objActSheet, $value, $fila5, '003366');
         UtilExcelPHP::estiloCelda($objActSheet, $value, $fila5, true, 'Verdana', 10, 'FFFFFF');
     }
 
@@ -85,10 +85,11 @@ if (isset($_POST['btn-reporte'])) {
         $objActSheet->setCellValue($columnas[4] . $filaData, $value['horas_laboradas']);
         $objActSheet->setCellValue($columnas[5] . $filaData, utf8_encode($value['actividades']));
         $objActSheet->setCellValue($columnas[6] . $filaData, $value['total_horas']);
+        UtilExcelPHP::estiloCelda($objActSheet, $columnas[6], $filaData, true, 'Arial', 15, '000000');
 
         /*
          * Permite determinar en que momento hace el merge de las celdas de nombre
-         * del consultor y de los totales, esto para un mejor visualizacion del
+         * del consultor y de los totales, esto para una mejor visualizacion del
          * reporte
          */
         if ($i == 1) {
@@ -102,6 +103,7 @@ if (isset($_POST['btn-reporte'])) {
             //echo $celdaIniMerge . ':' . $celdaFinMerge;
             UtilExcelPHP::mergeCeldas($objActSheet, $celdaIniMerge, $celdaFinMerge);
             UtilExcelPHP::mergeCeldas($objActSheet, $celdaTotalIniMerge, $celdaFinTotalMerge);
+            //UtilExcelPHP::fondoCelda2($objActSheet, $celdaTotalIniMerge, '003366');
 
             $idAnterior = $value['id'];
             $celdaIniMerge = $columnas[0] . $filaData;
@@ -112,6 +114,7 @@ if (isset($_POST['btn-reporte'])) {
             //echo $celdaIniMerge . ':' . $celdaFinMerge;
             UtilExcelPHP::mergeCeldas($objActSheet, $celdaIniMerge, $celdaFinMerge);
             UtilExcelPHP::mergeCeldas($objActSheet, $celdaTotalIniMerge, $celdaFinTotalMerge);
+            //UtilExcelPHP::fondoCelda2($objActSheet, $celdaTotalIniMerge, '003366');
         }
 
         //echo $celdaIniMerge;

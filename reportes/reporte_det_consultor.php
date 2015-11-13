@@ -41,7 +41,7 @@ if (isset($_POST['btn-reporte'])) {
     UtilExcelPHP::mergeCeldas($objActSheet, $columnas[0] . $fila1, $columnas[3] . '4');
     $objActSheet->setCellValue($columnas[0] . $fila1, "REPORTE DETALLADO DE CONSULTORES\rDESDE " .
             $fecha_inicial . ' HASTA ' . $fecha_final);
-    UtilExcelPHP::estiloCelda($objActSheet, $columnas[0], $fila1, true, 'Arial', 15, 'FF0000FF');
+    UtilExcelPHP::estiloCelda($objActSheet, $columnas[0], $fila1, true, 'Arial', 15, '003366');
 
     //Logo de la empresa
     UtilExcelPHP::mergeCeldas($objActSheet, 'E1', 'G4');
@@ -60,7 +60,7 @@ if (isset($_POST['btn-reporte'])) {
 
     //Fondo a los encabezados y color de letra
     foreach ($columnas as $value) {
-        UtilExcelPHP::fondoCelda($objActSheet, $value, $fila8, '0000CC');
+        UtilExcelPHP::fondoCelda($objActSheet, $value, $fila8, '003366');
         UtilExcelPHP::estiloCelda($objActSheet, $value, $fila8, true, 'Verdana', 10, 'FFFFFF');
     }
 
@@ -101,11 +101,15 @@ if (isset($_POST['btn-reporte'])) {
                 $objActSheet->setCellValue($columnas[3] . $filaData, $value['total_horas']);
                 $objActSheet->setCellValue($columnas[5] . $filaData, $value['total_valor']);
 
-
                 UtilExcelPHP::estiloCelda($objActSheet, $columnas[1], $filaData, true, 'Arial', 15, '000000');
                 UtilExcelPHP::estiloCelda($objActSheet, $columnas[3], $filaData, true, 'Arial', 15, '000000');
                 UtilExcelPHP::estiloCelda($objActSheet, $columnas[5], $filaData, true, 'Arial', 15, '000000');
 
+                UtilExcelPHP::formatoCeldaNumero($objActSheet, $columnas[5] . $filaData);
+
+                foreach ($columnas as $columna) {
+                    UtilExcelPHP::fondoCelda($objActSheet, $columna, $filaData, 'cccccc');
+                }
                 break;
             }
         } else {

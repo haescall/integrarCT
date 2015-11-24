@@ -58,9 +58,8 @@ class UtilExcelPHP {
           )
           ); */
     }
-    
-    
-     public static function estiloCelda2($objActSheet, $celda, $bold, $tipoLetra, $size, $rgb) {
+
+    public static function estiloCelda2($objActSheet, $celda, $bold, $tipoLetra, $size, $rgb) {
         $objActSheet->getStyle($celda)
                 ->getFont()
                 ->setBold($bold)
@@ -106,7 +105,13 @@ class UtilExcelPHP {
 
         /* $objActSheet->getStyle($celda)->
           getNumberFormat()->
-          setFormatCode('#,##0.00'); */
+          setFormatCode('#,##0.00');
+
+
+          $objPHPExcel->getActiveSheet()->
+          getStyle('A1')->
+          getNumberFormat()->
+          setFormatCode('[Blue][>=3000]$#,##0;[Red][<0]$#,##0;$#,##0'); */
     }
 
 }

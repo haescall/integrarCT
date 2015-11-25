@@ -15,9 +15,9 @@ if (isset($_POST['btn-reporte'])) {
     //Establecer propiedades
     $objPHPExcel->getProperties()->setCreator("Hanseld A. Escallon Ortiz")
             ->setLastModifiedBy("Hanseld A. Escallon Ortiz")
-            ->setTitle("Reporte Detallado Consultores")
-            ->setSubject("Reporte Detallado Consultores")
-            ->setDescription("Reporte Detallado Consultores.")
+            ->setTitle("Reporte Resumido Consultores")
+            ->setSubject("Reporte Resumido Consultores")
+            ->setDescription("Reporte Resumido Consultores.")
             ->setKeywords("Excel Office 2007 openxml php")
             ->setCategory("Reporte");
 
@@ -27,8 +27,7 @@ if (isset($_POST['btn-reporte'])) {
         2 => "C",
         3 => "D",
         4 => "E",
-        5 => "F",
-        6 => "G");
+        5 => "F");
     $fila1 = 1;
     $fila8 = 8;
 
@@ -39,12 +38,12 @@ if (isset($_POST['btn-reporte'])) {
 
     //Estilo y titulo del reporte
     UtilExcelPHP::mergeCeldas($objActSheet, $columnas[0] . $fila1, $columnas[3] . '4');
-    $objActSheet->setCellValue($columnas[0] . $fila1, "REPORTE DETALLADO DE CONSULTORES\rDESDE " .
+    $objActSheet->setCellValue($columnas[0] . $fila1, "REPORTE RESUMIDO DE CONSULTORES\rDESDE " .
             $fecha_inicial . ' HASTA ' . $fecha_final);
     UtilExcelPHP::estiloCelda($objActSheet, $columnas[0], $fila1, true, 'Arial', 15, '003366');
 
     //Logo de la empresa
-    UtilExcelPHP::mergeCeldas($objActSheet, 'E1', 'G4');
+    UtilExcelPHP::mergeCeldas($objActSheet, 'E1', 'F4');
     UtilExcelPHP::ponerLogo($objActSheet, 'E1');
 
 
@@ -52,10 +51,9 @@ if (isset($_POST['btn-reporte'])) {
     $objActSheet->setCellValue($columnas[0] . $fila8, 'Codigo Cliente');
     $objActSheet->setCellValue($columnas[1] . $fila8, 'Cliente');
     $objActSheet->setCellValue($columnas[2] . $fila8, 'Descripcion');
-    $objActSheet->setCellValue($columnas[3] . $fila8, 'No.  Horas');
-    $objActSheet->setCellValue($columnas[4] . $fila8, 'Fase');
-    $objActSheet->setCellValue($columnas[5] . $fila8, 'Valor Actividad');
-    $objActSheet->setCellValue($columnas[6] . $fila8, 'Actividad Desarrollada');
+    $objActSheet->setCellValue($columnas[3] . $fila8, 'Fase');
+    $objActSheet->setCellValue($columnas[4] . $fila8, 'No. Horas');
+    $objActSheet->setCellValue($columnas[5] . $fila8, 'Valor Asig. Cliente');
 
 
     //Fondo a los encabezados y color de letra
@@ -89,20 +87,19 @@ if (isset($_POST['btn-reporte'])) {
             $objActSheet->setCellValue($columnas[0] . $filaData, $value['cod_cliente']);
             $objActSheet->setCellValue($columnas[1] . $filaData, utf8_encode($value['cliente']));
             $objActSheet->setCellValue($columnas[2] . $filaData, utf8_encode($value['descripcion']));
-            $objActSheet->setCellValue($columnas[3] . $filaData, $value['horas_laboradas']);
-            $objActSheet->setCellValue($columnas[4] . $filaData, utf8_encode($value['nombre_fase']));
-            $objActSheet->setCellValue($columnas[5] . $filaData, $value['valor'] * $value['horas_laboradas']);
-            $objActSheet->setCellValue($columnas[6] . $filaData, utf8_encode($value['actividades']));
+            $objActSheet->setCellValue($columnas[3] . $filaData, utf8_encode($value['nombre_fase']));
+            $objActSheet->setCellValue($columnas[4] . $filaData, $value['horas_laboradas']);
+            $objActSheet->setCellValue($columnas[5] . $filaData, ($value['horas_laboradas'] * $value['valor']));
 
             if ($numRegistros == $i) {
                 $filaData += 2;
 
                 $objActSheet->setCellValue($columnas[1] . $filaData, "Total");
-                $objActSheet->setCellValue($columnas[3] . $filaData, $value['total_horas']);
+                $objActSheet->setCellValue($columnas[4] . $filaData, $value['total_horas']);
                 $objActSheet->setCellValue($columnas[5] . $filaData, $value['total_valor']);
 
                 UtilExcelPHP::estiloCelda($objActSheet, $columnas[1], $filaData, true, 'Arial', 15, '000000');
-                UtilExcelPHP::estiloCelda($objActSheet, $columnas[3], $filaData, true, 'Arial', 15, '000000');
+                UtilExcelPHP::estiloCelda($objActSheet, $columnas[4], $filaData, true, 'Arial', 15, '000000');
                 UtilExcelPHP::estiloCelda($objActSheet, $columnas[5], $filaData, true, 'Arial', 15, '000000');
 
                 UtilExcelPHP::formatoCeldaNumero($objActSheet, $columnas[5] . $filaData);
@@ -123,7 +120,7 @@ if (isset($_POST['btn-reporte'])) {
     }
 
     //Establecer la anchura
-    foreach (range('A', 'G') as $columnID) {
+    foreach (range('A', 'F') as $columnID) {
         $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
         //$col->setAutoSize(true);
         //$objActSheet->getColumnDimension('B')->setAutoSize(true);
@@ -135,7 +132,7 @@ if (isset($_POST['btn-reporte'])) {
 
     //Se modifican los encabezados del HTTP para indicar que se envia un archivo de Excel.
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8');
-    header('Content-Disposition: attachment;filename="reporteDetConsultor.xlsx"');
+    header('Content-Disposition: attachment;filename="reporteResConsultor.xlsx"');
     header('Cache-Control: max-age=0');
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     $objWriter->save('php://output');
@@ -148,7 +145,7 @@ if (isset($_POST['btn-reporte'])) {
 <div class="clearfix"></div><br />
 <div class="container">
     <div class="alert alert-info">
-        <strong>Reporte Detallado Consultores</strong>
+        <strong>Reporte Resumido Consultores</strong>
     </div>
     <form method='post'>
         <table class='table table-bordered'>

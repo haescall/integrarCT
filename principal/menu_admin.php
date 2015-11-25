@@ -56,6 +56,8 @@
                                        target="content">Reporte de Tiempos Semanales</a></li>
                                 <li><a href="../reportes/reporte_det_consultor.php" 
                                        target="content">Reporte Detallado Consultores</a></li>
+                                       <li><a href="../reportes/reporte_res_consultor.php" 
+                                       target="content">Reporte Resumido Consultores</a></li>
                             </ul>
 
                         </li>

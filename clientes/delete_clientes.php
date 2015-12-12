@@ -59,12 +59,13 @@ if(isset($_POST['btn-del']))
              <th>Cargo Contacto2</th>
              <th>Email Contacto2</th>
              <th>Teléfono Contacto2</th>
+             <th>Forma de Pago</th>
              <th>Estado</th>
          </tr>
          <?php
          $stmt = $DB_con->prepare(" SELECT id, nit, razon_social, objeto_social, direccion, ".
                                   " nombre_contacto_1, cargo_contacto_1, email_contacto_1, telefono_contacto_1, ".
-                                  " nombre_contacto_2, cargo_contacto_2, email_contacto_2, telefono_contacto_2, estado FROM cliente WHERE id=:id");
+                                  " nombre_contacto_2, cargo_contacto_2, email_contacto_2, telefono_contacto_2, forma_pago, estado FROM cliente WHERE id=:id");
          $stmt->execute(array(":id"=>$_GET['delete_id']));
          while($row=$stmt->fetch(PDO::FETCH_BOTH))
          {
@@ -83,6 +84,7 @@ if(isset($_POST['btn-del']))
                  <td><?php print($row['cargo_contacto_2']); ?></td>
                  <td><?php print($row['email_contacto_2']); ?></td>
                  <td><?php print($row['telefono_contacto_2']); ?></td>
+                 <td><?php print($row['forma_pago']); ?></td>
                  <td><?php print($row['estado']); ?></td>
              </tr>
              <?php

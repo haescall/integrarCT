@@ -28,13 +28,15 @@ include_once '../config/dbconfig.php';
      <th>Cargo Contacto2</th>
      <th>Email Contacto2</th>
      <th>Teléfono Contacto2</th>
+     <th>Forma de Pago</th>
      <th>Estado</th>
+     
      <th colspan="2" align="center">Acciones</th>
      </tr>
      <?php
 		$query = " SELECT id, nit, razon_social, objeto_social, direccion, ".
                  " nombre_contacto_1, cargo_contacto_1, email_contacto_1, telefono_contacto_1, ".
-                 " nombre_contacto_2, cargo_contacto_2, email_contacto_2, telefono_contacto_2, estado ".
+                 " nombre_contacto_2, cargo_contacto_2, email_contacto_2, telefono_contacto_2, forma_pago, estado  ".
                  " FROM cliente ";
 		$records_per_page=18;
 		$newquery = $crud_clientes->paging($query,$records_per_page);

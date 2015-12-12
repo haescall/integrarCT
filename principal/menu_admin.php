@@ -51,13 +51,14 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    <a href="../reportes/reporte_tiempo_semanal.php" 
+                                <li><a href="../reportes/reporte_tiempo_semanal.php" 
                                        target="content">Reporte de Tiempos Semanales</a></li>
                                 <li><a href="../reportes/reporte_det_consultor.php" 
                                        target="content">Reporte Detallado Consultores</a></li>
-                                       <li><a href="../reportes/reporte_res_consultor.php" 
+                                <li><a href="../reportes/reporte_res_consultor.php" 
                                        target="content">Reporte Resumido Consultores</a></li>
+                                       <li><a href="../reportes/reporte_cliente_consultoria.php" 
+                                       target="content">Reporte Por Cliente y Consultoría</a></li>
                             </ul>
 
                         </li>

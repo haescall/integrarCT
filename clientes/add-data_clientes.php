@@ -15,8 +15,9 @@ if (isset($_POST['btn-save'])) {
     $email_contacto_2 = $_POST['email_contacto_2'];
     $telefono_contacto_2 = $_POST['telefono_contacto_2'];
     $estado = $_POST['estado'];
+    $forma_pago = $_POST['forma_pago'];
 
-    if ($crud_clientes->create($nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado)) {
+    if ($crud_clientes->create($nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado, $forma_pago)) {
         header("Location: add-data_clientes.php?inserted");
     } else {
         header("Location: add-data_clientes.php?failure");
@@ -97,23 +98,28 @@ if (isset($_GET['inserted'])) {
 
             <tr class="success">
                 <td>Nombres Contacto 2</td>
-                <td><input type='text' name='nombre_contacto_2' class='form-control' required></td>
+                <td><input type='text' name='nombre_contacto_2' class='form-control' ></td>
             </tr>
 
             <tr class="success">
                 <td>Cargo Contacto 2</td>
-                <td><input type='text' name='cargo_contacto_2' class='form-control' required></td>
+                <td><input type='text' name='cargo_contacto_2' class='form-control' ></td>
             </tr>
 
             <tr class="success">
                 <td>Email Contacto 2</td>
-                <td><input type='text' name='email_contacto_2' class='form-control' required></td>
+                <td><input type='text' name='email_contacto_2' class='form-control' ></td>
             </tr>
 
 
             <tr class="success">
                 <td>Teléfono Contacto 2</td>
-                <td><input type='text' name='telefono_contacto_2' class='form-control' required></td>
+                <td><input type='text' name='telefono_contacto_2' class='form-control' ></td>
+            </tr>
+
+            <tr class="success">
+                <td>Forma de Pago</td>
+                <td><input type='text' name='forma_pago' class='form-control' required></td>
             </tr>
 
             <tr class="success">

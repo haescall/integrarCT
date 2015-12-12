@@ -79,14 +79,84 @@ class crud_consultorias_ejecutadas {
             $stmt = $this->db->prepare("SELECT a.id, concat(a.nombres, '  ',  a.apellidos) consultor, "
                     . "b.fecha, dia_en_texto(b.fecha) as dia, c.razon_social cliente, "
                     . "b.horas_laboradas, b.actividades, "
-                    . "total_horas_consultor(a.id, STR_TO_DATE('" . $fechaIni ."','%Y-%m-%d'), "
-                    . "STR_TO_DATE('" . $fechaFin ."','%Y-%m-%d')) total_horas from consultor a, "
+                    . "total_horas_consultor(a.id, STR_TO_DATE('" . $fechaIni . "','%Y-%m-%d'), "
+                    . "STR_TO_DATE('" . $fechaFin . "','%Y-%m-%d')) total_horas from consultor a, "
                     . "consultorias_ejecutadas b, cliente c, consultoria d "
                     . "where a.id = b.codigo_consultor and c.id = d.codigo_cliente "
                     . "and b.codigo_consultoria = d.id and DATE_FORMAT(b.fecha ,'%Y-%m-%d') "
-                    . "between STR_TO_DATE('" . $fechaIni ."','%Y-%m-%d') "
-                    . "and STR_TO_DATE('" . $fechaFin ."','%Y-%m-%d') order by b.fecha;");
+                    . "between STR_TO_DATE('" . $fechaIni . "','%Y-%m-%d') "
+                    . "and STR_TO_DATE('" . $fechaFin . "','%Y-%m-%d') order by b.fecha;");
             //$stmt = $this->db->prepare("SELECT * FROM consultorias_ejecutadas;");
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+                //echo $i;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+    
+    
+    
+     public function datosDetalladoConsultoria($fechaIni, $fechaFin, $consultoriaID) {
+        try {
+            $stmt = $this->db->prepare("SELECT a.id AS id_cliente, a.razon_social AS nombre_cliente, "
+                    . "b.id AS id_consultoria, b.nombre AS nombre_consultoria, d.id AS id_consultor, "
+                    . "CONCAT(d.nombres, ' ', d.apellidos) nombre_consultor, e.id AS id_fase, "
+                    . "e.descripcion AS nombre_fase, f.horas_laboradas AS numero_horas, "
+                    . "f.horas_laboradas * valor AS valor_actividad FROM cliente a, consultoria b, "
+                    . "consultoria_consultor c, consultor d, fases e, consultorias_ejecutadas f "
+                    . "WHERE a.id = b.codigo_cliente AND b.id = c.codigo_consultoria "
+                    . "AND d.id = c.codigo_consultor AND b.id = f.codigo_consultoria "
+                    . "AND e.id = f.codigo_fase AND b.id = ". $consultoriaID . " "
+                    . "AND DATE_FORMAT(f.fecha, '%Y-%m-%d') between "
+                    . "STR_TO_DATE('" . $fechaIni . "','%Y-%m-%d') "
+                    . "AND STR_TO_DATE('" . $fechaFin . "','%Y-%m-%d') ORDER BY f.fecha");
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+                //echo $i;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+    
+    
+
+    public function horasClientesConsultorias($fechaIni, $fechaFin, $consultoriaID) {
+        try {
+            $stmt = $this->db->prepare("select 
+                                            c.id cod_cliente, 
+                                            c.razon_social,
+                                            c2.id cod_consultor,
+                                            c2.nombres consultor,
+                                            f.descripcion fase,
+                                            ce.horas_laboradas num_horas,
+                                            ce.horas_laboradas * cc.valor_hora_consultoria valor_act
+                                   from cliente c, 
+                                        consultoria c1,   
+                                        consultor c2,
+                                        consultoria_consultor cc,
+                                        consultorias_ejecutadas ce,
+                                        fases f
+                                   where c.id = c1.codigo_cliente and
+                                                c2.id = cc.codigo_consultor and
+                                                c1.id = cc.codigo_consultoria and 
+                                                c1.id = ce.codigo_consultoria and
+                                                c2.id = ce.codigo_consultor and
+                                                f.id = ce.codigo_fase and
+                                                c1.id = 1
+                                   ;");
             $stmt->execute();
             $lista = array();
             $i = 0;

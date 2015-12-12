@@ -45,6 +45,31 @@ class crud_gastos_consultoria
 		}
 		
 	}
+        
+        
+        public function datosGastosConsultoria($fechaIni, $fechaFin, $consultoriaID) {
+        try {
+            $stmt = $this->db->prepare("SELECT b.nro_factura, b.fecha "
+                    . "AS fecha_gasto, b.valor AS valor_gasto, "
+                    . "b.concepto AS concepto_gasto, b.proveedor FROM consultoria a, "
+                    . "gastos_consultoria b WHERE b.codigo_consultoria = a.id "
+                    . "AND a.id = " . $consultoriaID . " AND DATE_FORMAT(b.fecha, '%Y-%m-%d') "
+                    . "between STR_TO_DATE('" . $fechaIni . "','%Y-%m-%d') "
+                    . "AND STR_TO_DATE('" . $fechaFin . "','%Y-%m-%d') "
+                    . "ORDER BY b.fecha");
+            $stmt->execute();
+            $lista = array();
+            $i = 0;
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $lista[$i] = $row;
+                $i++;
+                //echo $i;
+            }
+            return $lista;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 	
 	public function getID($id)
 	{

@@ -109,11 +109,11 @@ class crud_consultorias_ejecutadas {
                     . "b.id AS id_consultoria, b.nombre AS nombre_consultoria, d.id AS id_consultor, "
                     . "CONCAT(d.nombres, ' ', d.apellidos) nombre_consultor, e.id AS id_fase, "
                     . "e.descripcion AS nombre_fase, f.horas_laboradas AS numero_horas, "
-                    . "f.horas_laboradas * valor AS valor_actividad FROM cliente a, consultoria b, "
+                    . "f.horas_laboradas * valor_hora_consultoria AS valor_actividad FROM cliente a, consultoria b, "
                     . "consultoria_consultor c, consultor d, fases e, consultorias_ejecutadas f "
                     . "WHERE a.id = b.codigo_cliente AND b.id = c.codigo_consultoria "
                     . "AND d.id = c.codigo_consultor AND b.id = f.codigo_consultoria "
-                    . "AND e.id = f.codigo_fase AND b.id = ". $consultoriaID . " "
+                    . "AND d.id = f.codigo_consultor AND e.id = f.codigo_fase AND b.id = ". $consultoriaID . " "
                     . "AND DATE_FORMAT(f.fecha, '%Y-%m-%d') between "
                     . "STR_TO_DATE('" . $fechaIni . "','%Y-%m-%d') "
                     . "AND STR_TO_DATE('" . $fechaFin . "','%Y-%m-%d') ORDER BY f.fecha");

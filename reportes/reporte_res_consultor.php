@@ -89,14 +89,16 @@ if (isset($_POST['btn-reporte'])) {
             $objActSheet->setCellValue($columnas[2] . $filaData, utf8_encode($value['descripcion']));
             $objActSheet->setCellValue($columnas[3] . $filaData, utf8_encode($value['nombre_fase']));
             $objActSheet->setCellValue($columnas[4] . $filaData, $value['horas_laboradas']);
-            $objActSheet->setCellValue($columnas[5] . $filaData, ($value['horas_laboradas'] * $value['valor']));
+            $objActSheet->setCellValue($columnas[5] . $filaData, ($value['horas_laboradas'] * $value['valor_hora_consultoria']));
 
             if ($numRegistros == $i) {
                 $filaData += 2;
 
                 $objActSheet->setCellValue($columnas[1] . $filaData, "Total");
-                $objActSheet->setCellValue($columnas[4] . $filaData, $value['total_horas']);
-                $objActSheet->setCellValue($columnas[5] . $filaData, $value['total_valor']);
+                $objActSheet->setCellValue($columnas[4] . $filaData, '=SUM(E9:E' . ($filaData - 2) . ')');
+                $objActSheet->setCellValue($columnas[5] . $filaData, '=SUM(F9:F' . ($filaData - 2) . ')');
+                /* $objActSheet->setCellValue($columnas[4] . $filaData, $value['total_horas']);
+                  $objActSheet->setCellValue($columnas[5] . $filaData, $value['total_valor']); */
 
                 UtilExcelPHP::estiloCelda($objActSheet, $columnas[1], $filaData, true, 'Arial', 15, '000000');
                 UtilExcelPHP::estiloCelda($objActSheet, $columnas[4], $filaData, true, 'Arial', 15, '000000');

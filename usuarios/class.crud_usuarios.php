@@ -57,6 +57,26 @@ class crud_usuarios {
             echo $ex->getMessage();
         }
     }
+    
+    
+    public function actualizarRol($email, $codigoRol) {
+        try {
+            $stmt = $this->db->prepare("UPDATE users SET codigo_rol=:codigoRol,
+                                                         updated_at=CURDATE()
+                        		WHERE email=:email");
+            $stmt->bindparam(":codigoRol", $codigoRol);
+            $stmt->bindparam(":email", $email);
+            $stmt->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            echo ErrorMsg();
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    
 
     public function update($id, $name, $email, $password, $rememberToken) {
         try {

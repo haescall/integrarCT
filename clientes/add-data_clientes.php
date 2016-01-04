@@ -15,9 +15,9 @@ if (isset($_POST['btn-save'])) {
     $email_contacto_2 = $_POST['email_contacto_2'];
     $telefono_contacto_2 = $_POST['telefono_contacto_2'];
     $estado = $_POST['estado'];
-    $forma_pago = $_POST['forma_pago'];
+    $observaciones = $_POST['observaciones'];
 
-    if ($crud_clientes->create($nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado, $forma_pago)) {
+    if ($crud_clientes->create($nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado, $observaciones)) {
         header("Location: add-data_clientes.php?inserted");
     } else {
         header("Location: add-data_clientes.php?failure");
@@ -118,8 +118,8 @@ if (isset($_GET['inserted'])) {
             </tr>
 
             <tr class="success">
-                <td>Forma de Pago</td>
-                <td><input type='text' name='forma_pago' class='form-control' required></td>
+                <td>Observaciones</td>
+                <td><input type='text' name='observaciones' class='form-control' required></td>
             </tr>
 
             <tr class="success">

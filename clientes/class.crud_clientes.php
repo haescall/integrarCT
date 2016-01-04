@@ -8,7 +8,7 @@ class crud_clientes {
         $this->db = $DB_con;
     }
 
-    public function create($nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado, $forma_pago) {
+    public function create($nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado, $observaciones) {
         try {
             $stmt = $this->db->prepare("INSERT INTO cliente(nit,
                                                             razon_social,
@@ -23,7 +23,7 @@ class crud_clientes {
                                                             email_contacto_2,
                                                             telefono_contacto_2,
                                                             estado,
-                                                            forma_pago
+                                                            observaciones
                                       ) VALUES(             :nit,
                                                             :razon_social,
                                                             :objeto_social,
@@ -37,7 +37,7 @@ class crud_clientes {
                                                             :email_contacto_2,
                                                             :telefono_contacto_2,
                                                             :estado,
-                                                            :forma_pago
+                                                            :observaciones
                                       )");
 
 
@@ -58,7 +58,7 @@ class crud_clientes {
             $stmt->bindparam(":telefono_contacto_2", $telefono_contacto_2);
 
             $stmt->bindparam(":estado", $estado); 
-            $stmt->bindparam(":forma_pago", $forma_pago);
+            $stmt->bindparam(":observaciones", $observaciones);
             $stmt->execute();
             return true;
         } catch (PDOException $e) {
@@ -75,7 +75,7 @@ class crud_clientes {
         return $editRow;
     }
 
-    public function update($id, $nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado,$forma_pago) {
+    public function update($id, $nit, $razon_social, $objeto_social, $direccion, $nombre_contacto_1, $cargo_contacto_1, $email_contacto_1, $telefono_contacto_1, $nombre_contacto_2, $cargo_contacto_2, $email_contacto_2, $telefono_contacto_2, $estado,$observaciones) {
         try {
             $stmt = $this->db->prepare("UPDATE cliente SET nit=:nit,
                                                          razon_social=:razon_social,
@@ -90,7 +90,7 @@ class crud_clientes {
                                                          email_contacto_2=:email_contacto_2,
                                                          telefono_contacto_2=:telefono_contacto_2,
                                                          estado=:estado,
-                                                         forma_pago=:forma_pago
+                                                         observaciones=:observaciones
 							WHERE id=:id ");
             $stmt->bindparam(":nit", $nit);
             $stmt->bindparam(":razon_social", $razon_social);
@@ -105,7 +105,7 @@ class crud_clientes {
             $stmt->bindparam(":email_contacto_2", $email_contacto_2);
             $stmt->bindparam(":telefono_contacto_2", $telefono_contacto_2);
             $stmt->bindparam(":estado", $estado);
-            $stmt->bindparam(":forma_pago", $forma_pago);
+            $stmt->bindparam(":observaciones", $observaciones);
             $stmt->bindparam(":id", $id);
             $stmt->execute();
 
@@ -147,7 +147,7 @@ class crud_clientes {
                     <td><?php print($row['cargo_contacto_2']); ?></td>
                     <td><?php print($row['email_contacto_2']); ?></td>
                     <td><?php print($row['telefono_contacto_2']); ?></td>
-                    <td><?php print($row['forma_pago']); ?></td>
+                    <td><?php print($row['observaciones']); ?></td>
                     <td><?php print($row['estado']); ?></td>
                     <td align="center">
                         <a href="edit-data_clientes.php?edit_id=<?php print($row['id']); ?>">

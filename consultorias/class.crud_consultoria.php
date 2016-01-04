@@ -8,7 +8,7 @@ class crud_consultoria {
         $this->db = $DB_con;
     }
 
-    public function create($nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado) {
+    public function create($nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado, $forma_pago) {
         try {
             $stmt = $this->db->prepare("INSERT INTO consultoria(
                                                             nombre,
@@ -18,7 +18,8 @@ class crud_consultoria {
                                                             valor_contrato,
                                                             entregables,
                                                             estado,
-                                                            created_at
+                                                            created_at,
+                                                            forma_pago
                                       ) VALUES(             :nombre,
                                                             :descripcion,
                                                             :fecha_inicio,
@@ -26,7 +27,8 @@ class crud_consultoria {
                                                             :valor_contrato,
                                                             :entregables,
                                                             :estado,
-                                                            CURDATE()
+                                                            CURDATE(),
+                                                            :forma_pago
                                       )");
 
             $stmt->bindparam(":nombre", $nombre);
@@ -36,6 +38,7 @@ class crud_consultoria {
             $stmt->bindparam(":valor_contrato", $valor_contrato);
             $stmt->bindparam(":entregables", $entregables);
             $stmt->bindparam(":estado", $estado);
+            $stmt->bindparam(":forma_pago", $forma_pago);
 
             $stmt->execute();
             return true;
@@ -69,7 +72,7 @@ class crud_consultoria {
         }
     }
 
-    public function update($id, $nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado) {
+    public function update($id, $nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado, $forma_pago) {
         try {
             $stmt = $this->db->prepare("UPDATE consultoria SET nombre = :nombre,
                                                            descripcion=:descripcion,
@@ -78,7 +81,8 @@ class crud_consultoria {
 													       valor_contrato=:valor_contrato,
 													       entregables=:entregables,
 													       estado=:estado,
-													       updated_at=CURDATE()
+													       updated_at=CURDATE(),
+                                                                                                               forma_pago=:forma_pago
 													WHERE id=:id ");
             $stmt->bindparam(":nombre", $nombre);
             $stmt->bindparam(":descripcion", $descripcion);
@@ -87,6 +91,7 @@ class crud_consultoria {
             $stmt->bindparam(":valor_contrato", $valor_contrato);
             $stmt->bindparam(":entregables", $entregables);
             $stmt->bindparam(":estado", $estado);
+            $stmt->bindparam(":forma_pago", $forma_pago);
             $stmt->bindparam(":id", $id);
             $stmt->execute();
 
@@ -123,7 +128,8 @@ class crud_consultoria {
                     <td><?php print($row['razon_social']); ?></td>
                     <td><?php print($row['valor_contrato']); ?></td>
                     <td><?php print($row['entregables']); ?></td>
-                    <td><?php print($row['estado']); ?></td>
+                    <td><?php print($row['forma_pago']); ?></td>
+                    <td><?php print($row['estado']); ?></td>                    
                     <td><?php print($row['created_at']); ?></td>
                     <td><?php print($row['updated_at']); ?></td>
                     <td align="center">

@@ -47,13 +47,14 @@ if (isset($_POST['btn-del'])) {
                 <th>Cliente</th>
                 <th>Valor Contrato</th>
                 <th>Entregables</th>
+                <th>Forma de pago</th>
                 <th>Estado</th>
                 <th>Fecha Creación</th>
                 <th>Última Modificación</th>
             </tr>
             <?php
             $stmt = $DB_con->prepare("SELECT c.id, c.nombre, c.descripcion, c.fecha_inicio, cl.razon_social, c.valor_contrato, c.entregables, " .
-                    " c.estado, c.created_at, c.updated_at " .
+                    " c.forma_pago, c.estado, c.created_at, c.updated_at " .
                     " FROM consultoria c, cliente cl " .
                     " WHERE c.codigo_cliente = cl.id AND c.id=:id");
             $stmt->execute(array(":id" => $_GET['delete_id']));
@@ -67,6 +68,7 @@ if (isset($_POST['btn-del'])) {
                     <td><?php print($row['razon_social']); ?></td>
                     <td><?php print($row['valor_contrato']); ?></td>
                     <td><?php print($row['entregables']); ?></td>
+                    <td><?php print($row['forma_pago']); ?></td>
                     <td><?php print($row['estado']); ?></td>
                     <td><?php print($row['created_at']); ?></td>
                     <td><?php print($row['updated_at']); ?></td>

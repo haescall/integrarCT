@@ -8,8 +8,9 @@ if (isset($_POST['btn-save'])) {
     $valor_contrato = $_POST['valor_contrato'];
     $entregables = $_POST['entregables'];
     $estado = $_POST['estado'];
+    $forma_pago = $_POST['forma_pago'];
 
-    if ($crud_consultoria->create($nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado)) {
+    if ($crud_consultoria->create($nombre, $descripcion, $fecha_inicio, $codigo_cliente, $valor_contrato, $entregables, $estado, $forma_pago)) {
         header("Location: add-data_consultoria.php?inserted");
     } else {
         header("Location: add-data_consultoria.php?failure");
@@ -103,6 +104,11 @@ $stmt->execute();
             <tr class="success">
                 <td>Entregables</td>
                 <td><textarea name="entregables" class="form-control" rows="3" required></textarea></td>
+            </tr>
+
+            <tr class="success">
+                <td>Forma de pago</td>
+                <td><input type='text' name='forma_pago' class='form-control' required></td>
             </tr>
 
             <tr class="success">

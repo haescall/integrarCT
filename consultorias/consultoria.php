@@ -22,7 +22,8 @@ include_once 'header.php';
             <th>Cliente</th>
             <th>Valor Contrato</th>
             <th>Entregables</th>
-            <th>Estado</th>
+            <th>Forma de pago</th>
+            <th>Estado</th>            
             <th>Fecha Creacion</th>
             <th>Última Modificación</th>
             <th colspan="4" align="center">Acciones</th>
@@ -30,7 +31,7 @@ include_once 'header.php';
         <?php
         $query = " SELECT c.id, c.nombre, c.descripcion, c.fecha_inicio, "
                 . "cl.razon_social, c.valor_contrato, c.entregables, " .
-                " c.estado, c.created_at, c.updated_at " .
+                " c.forma_pago, c.estado,  c.created_at, c.updated_at " .
                 " FROM consultoria c, cliente cl " .
                 " WHERE c.codigo_cliente = cl.id";
         $records_per_page = 10;

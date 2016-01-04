@@ -2,7 +2,7 @@
 include_once '../config/dbconfig.php';
 if(isset($_POST['btn-update']))
 {
-	$id = $_GET['edit_id'];
+    $id = $_GET['edit_id'];
     $nombre = $_POST['nombre'];
     $descripcion = $_POST['descripcion'];
     $fecha_inicio = $_POST['fecha_inicio'];
@@ -10,8 +10,9 @@ if(isset($_POST['btn-update']))
     $valor_contrato = $_POST['valor_contrato'];
     $entregables = $_POST['entregables'];
     $estado = $_POST['estado'];
+    $forma_pago = $_POST['forma_pago'];
 	
-	if($crud_consultoria->update($id,$nombre,$descripcion,$fecha_inicio,$codigo_cliente,$valor_contrato,$entregables,$estado))
+	if($crud_consultoria->update($id,$nombre,$descripcion,$fecha_inicio,$codigo_cliente,$valor_contrato,$entregables,$estado, $forma_pago))
 	{
 		$msg = "<div class='alert alert-info'>
 				La Consultoría fue actualizada correctamente <a href='consultoria.php'>RETORNAR A CONSULTORÍAS</a>!
@@ -85,6 +86,11 @@ if(isset($msg))
         <tr class="success">
             <td>Entregables</td>
             <td><textarea name="entregables" class="form-control" rows="3" required><?php echo $entregables; ?></textarea></td>
+        </tr>
+
+        <tr class="success">
+            <td>Forma de pago</td>
+            <td><input name="forma_pago" class="form-control" rows="3" value="<?php echo $forma_pago; ?>" required></td>
         </tr>
 
         <tr class="success">

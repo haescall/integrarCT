@@ -14,7 +14,7 @@ if(isset($_POST['btn-save']))
     $email_contacto = $_POST['email_contacto'];
     $codigo_rol = $_POST['codigo_rol'];
 	
-	if(   $crud_usuarios->create($email_contacto, $documento, $codigo_rol)
+	if(   $crud_usuario->create($email_contacto, $documento, $codigo_rol)
               && $crud_consultor->create($tipo_documento,$documento,$nombres,$apellidos,$cargo,$telefono,$direccion,$fecha_ingreso, $estado, $email_contacto)
            )    
 	{

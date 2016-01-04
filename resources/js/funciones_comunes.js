@@ -49,3 +49,18 @@ function recargar() {
         self.parent.location = pagina;
     }
 }
+
+
+function  getConsultoriaIdPrimeFaces(idSelect) {
+    nombreConsultoria = $(".pui-dropdown-label").html();
+
+    $("#" + idSelect + " option").each(function () {
+        if ($(this).text() === nombreConsultoria) {
+            consultoria_id = $(this).attr('value');
+        }
+        //alert('opcion ' + $(this).text() + ' valor ' + $(this).attr('value'));
+    });
+
+    return consultoria_id;
+
+}

@@ -10,8 +10,7 @@ if (isset($_POST['btn-save'])) {
     $valor = $_POST['valor'];
     $actividades = $_POST['actividades'];
 
-    if ($crud_consultorias_ejecutadas->create($codigo_fase, $codigo_consultoria,
-            $codigo_consultor, $fecha, $horas_laboradas, $valor, $actividades)) {
+    if ($crud_consultorias_ejecutadas->create($codigo_fase, $codigo_consultoria, $codigo_consultor, $fecha, $horas_laboradas, $valor, $actividades)) {
         header("Location: add-data_consultorias_ejecutadas.php?inserted");
     } else {
         header("Location: add-data_consultorias_ejecutadas.php?failure");
@@ -55,12 +54,10 @@ if (isset($_GET['inserted'])) {
                 <td>
                     <select id="cod_consul" name="cod_consul" class="form-control" required>
                         <option value="" selected>Seleccione una consultoría...</option>
-                        <?php                        
+                        <?php
                         foreach ($crud_consultoria_consultores->getConsultoriasXConsultor($_SESSION["codigo_consultor"]) as $value) {
                             ?>
-                            <option value = "<?php print($value['id']); ?>">
-                                <?php print($value['nombre']); ?></option>  
-
+                            <option value = "<?php print($value['id']); ?>"><?php print($value['nombre']); ?></option>  
                             <?php
                         }
                         ?>
@@ -72,7 +69,9 @@ if (isset($_GET['inserted'])) {
                 <td>Fecha</td>
                 <td>
                     <div class="hero-unit">
-                        <input name="fecha" type="text" placeholder="Click para ingresar la fecha"  id="fecha" class='form-control' required>
+                        <input name="fecha" type="text" 
+                               placeholder="Click para ingresar la fecha"  
+                               id="fecha" class='form-control' required>
                     </div>
                 </td>
             </tr>
@@ -103,11 +102,11 @@ if (isset($_GET['inserted'])) {
             </tr>
             <tr class="success">
                 <td>Horas</td>
-                <td><input type='text' name='horas_laboradas' class='form-control' required></td>
+                <td><input type='text' id="horas_laboradas" name='horas_laboradas' class='form-control' required></td>
             </tr>
             <tr class="success">
                 <td>Valor</td>
-                <td><input type='text' name='valor' class='form-control' required></td>
+                <td><input readonly="true" type='text' id="valor" name='valor' class='form-control' required></td>
             </tr>
 
             <tr class="success">

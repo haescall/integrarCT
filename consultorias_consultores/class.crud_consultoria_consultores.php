@@ -84,8 +84,8 @@ class crud_consultoria_consultores {
             echo $e->getMessage();
         }
     }
-    
-     public function getConsultoriasActivas() {
+
+    public function getConsultoriasActivas() {
         try {
             $stmt = $this->db->prepare("SELECT a.id, a.nombre, a.descripcion, a.fecha_inicio, a.codigo_cliente, "
                     . "a.valor_contrato, a.entregables, a.estado FROM consultoria a "
@@ -102,8 +102,8 @@ class crud_consultoria_consultores {
             echo $e->getMessage();
         }
     }
-    
-         public function getConsultoriasXConsultor($idConsultor) {
+
+    public function getConsultoriasXConsultor($idConsultor) {
         try {
             $stmt = $this->db->prepare("SELECT a.id, a.nombre, a.descripcion, a.fecha_inicio, a.codigo_cliente, "
                     . "a.valor_contrato, a.entregables, a.estado FROM consultoria a, consultoria_consultor b "
@@ -121,7 +121,6 @@ class crud_consultoria_consultores {
             echo $e->getMessage();
         }
     }
-
 
     public function deleteConsultorEnConsultoria($idConsecutivo) {
         try {
@@ -164,6 +163,20 @@ class crud_consultoria_consultores {
             return $lista;
         } catch (PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+
+    public function getConsultorXConsultoria($idConsultoria, $idConsultor) {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM consultoria_consultor "
+                    . "WHERE codigo_consultoria = :idConsultoria AND codigo_consultor = :idConsultor");
+            $stmt->bindparam(":idConsultoria", $idConsultoria);
+            $stmt->bindparam(":idConsultor", $idConsultor);
+            $stmt->execute();
+            $consultor = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $consultor;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
         }
     }
 

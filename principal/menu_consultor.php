@@ -29,7 +29,8 @@
                             <a href="#" class="dropdown-toggle"
                                data-toggle="dropdown">Configuración<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Cambio de Contraseña</a></li>
+                                <li><a href="../usuarios/cambio_contrasena.php" 
+                                       target="content">Cambio de Contraseña</a></li>
                             </ul>
                         </li>
                         <li><a href="../desconectar.php">Cerrar Sesión</a></li>

@@ -24,7 +24,7 @@ class crud_usuarios {
             $stmt->bindparam(":codigo_rol", $codigo_rol);
             $stmt->execute();
             return true;
-        } catch (PDOException $e) {            
+        } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }
@@ -40,25 +40,24 @@ class crud_usuarios {
     public function validarUsuario($email, $password) {
         try {
             //$stmt = $this->db->prepare("SELECT * FROM users WHERE email=:email AND password=:password");
-            $stmt = $this->db->prepare("SELECT a.id, a.password, a.codigo_rol," . 
-                    " b.id codigo_consultor, a.email FROM users a, consultor b WHERE " . 
+            $stmt = $this->db->prepare("SELECT a.id, a.password, a.codigo_rol," .
+                    " b.id codigo_consultor, a.email FROM users a, consultor b WHERE " .
                     " a.email= b.email_contacto AND a.email=:email AND a.password=:password");
             $stmt->bindparam(":email", $email);
             $stmt->bindparam(":password", $password);
             $stmt->execute();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            /*if ($row["email"] != "") {
-                return true;
-            } else {
-                return false;
-            }*/
+            /* if ($row["email"] != "") {
+              return true;
+              } else {
+              return false;
+              } */
             return $row;
         } catch (Exception $ex) {
             echo $ex->getMessage();
         }
     }
-    
-    
+
     public function actualizarRol($email, $codigoRol) {
         try {
             $stmt = $this->db->prepare("UPDATE users SET codigo_rol=:codigoRol,
@@ -75,8 +74,6 @@ class crud_usuarios {
             return false;
         }
     }
-
-    
 
     public function update($id, $name, $email, $password, $rememberToken) {
         try {
@@ -105,6 +102,19 @@ class crud_usuarios {
         $stmt = $this->db->prepare("DELETE FROM users WHERE id=:id");
         $stmt->bindparam(":id", $id);
         $stmt->execute();
+        return true;
+    }
+
+    public function cambiar_contrasena($email, $passnew) {
+        try {
+            $stmt = $this->db->prepare("UPDATE users U set password = :passnew WHERE email=:email");
+            $stmt->bindparam(":email", $email);
+            $stmt->bindparam(":passnew", $passnew);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
         return true;
     }
 

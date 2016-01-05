@@ -45,7 +45,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuración<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Cambio de Contraseña</a></li>
+                                <li><a href="../usuarios/cambio_contrasena.php" 
+                                       target="content">Cambio de Contraseña</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -57,7 +58,7 @@
                                        target="content">Reporte Detallado Consultores</a></li>
                                 <li><a href="../reportes/reporte_res_consultor.php" 
                                        target="content">Reporte Resumido Consultores</a></li>
-                                       <li><a href="../reportes/reporte_cliente_consultoria.php" 
+                                <li><a href="../reportes/reporte_cliente_consultoria.php" 
                                        target="content">Reporte Por Cliente y Consultoría</a></li>
                             </ul>
 

@@ -153,7 +153,7 @@ class crud_consultor {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 ?>
                 <tr>
-                    <td><?php print($row['id']); ?></td>
+                    <td><?php print($row['id_consultor']); ?></td>
                     <td><?php print($row['tipo_documento']); ?></td>
                     <td><?php print($row['documento']); ?></td>
                     <td><?php print($row['nombres']); ?></td>
@@ -164,11 +164,14 @@ class crud_consultor {
                     <td><?php print($row['fecha_ingreso']); ?></td>
                     <td><?php print($row['estado']); ?></td>
                     <td><?php print($row['email_contacto']); ?></td>
+                    <td><?php print($row['nombre_rol']); ?></td>
                     <td align="center">
-                        <a href="edit-data_consultor.php?edit_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                        <a href="edit-data_consultor.php?edit_id=<?php print($row['id_consultor']); ?>&id_usuario=<?php print($row['id_usuario']); ?>&email=<?php print($row['email']); ?>">
+                            <i class="glyphicon glyphicon-edit"></i></a>
                     </td>
                     <td align="center">
-                        <a href="delete_consultor.php?delete_id=<?php print($row['id']); ?>"><i class="glyphicon glyphicon-remove-circle"></i></a>
+                        <a href="delete_consultor.php?delete_id=<?php print($row['id_consultor']); ?>&id_usuario=<?php print($row['id_usuario']); ?>&email=<?php print($row['email']); ?>">
+                            <i class="glyphicon glyphicon-remove-circle"></i></a>
                     </td>
                 </tr>
                 <?php
@@ -176,7 +179,7 @@ class crud_consultor {
         } else {
             ?>
             <tr>
-                <td colspan="13" align="center">No hay Consultores creados...</td>
+                <td colspan="14" align="center">No hay Consultores creados...</td>
             </tr>
             <?php
         }

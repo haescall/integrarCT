@@ -98,6 +98,14 @@ class crud_usuarios {
         }
     }
 
+     public function deleteUsuario($id, $email) {
+        $stmt = $this->db->prepare("DELETE FROM users WHERE id=:id AND email=:email");
+        $stmt->bindparam(":id", $id);
+        $stmt->bindparam(":email", $email);
+        $stmt->execute();
+        return true;
+    }
+    
     public function delete($id) {
         $stmt = $this->db->prepare("DELETE FROM users WHERE id=:id");
         $stmt->bindparam(":id", $id);

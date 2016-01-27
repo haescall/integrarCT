@@ -60,13 +60,13 @@ if (isset($_POST['btn-reporte'])) {
     $objActSheet->setCellValue($columnas[6] . $fila5, 'Totales');
 
 
-    //Fondo a los emcabezados
+    //Fondo a los encabezados
     foreach ($columnas as $value) {
         UtilExcelPHP::fondoCelda($objActSheet, $value, $fila5, '003366');
         UtilExcelPHP::estiloCelda($objActSheet, $value, $fila5, true, 'Verdana', 10, 'FFFFFF');
     }
 
-    $i = 1;
+    $i = 0;
     $celdaIniMerge = "";
     $celdaFinMerge = "";
     $idAnterior = "";
@@ -77,7 +77,7 @@ if (isset($_POST['btn-reporte'])) {
         //echo $numRegistros;
         //echo $value['consultor'];
 
-        $filaData = $i + $fila5;
+        $filaData = $i + 1 + $fila5;
         $objActSheet->setCellValue($columnas[0] . $filaData, utf8_encode($value['consultor']));
         $objActSheet->setCellValue($columnas[1] . $filaData, $value['fecha']);
         $objActSheet->setCellValue($columnas[2] . $filaData, utf8_encode($value['dia']));
@@ -92,19 +92,21 @@ if (isset($_POST['btn-reporte'])) {
          * del consultor y de los totales, esto para una mejor visualizacion del
          * reporte
          */
-        if ($i == 1) {
+        if ($i == 0) {
             $idAnterior = $value['id'];
             $celdaIniMerge = $columnas[0] . $filaData;
             $celdaTotalIniMerge = $columnas[6] . $filaData;
             //echo $celdaIniMerge . ':' . $celdaFinMerge;
-        } else if ($value['id'] != $idAnterior) {
-            $celdaFinMerge = $columnas[0] . $filaData - 1;
-            $celdaFinTotalMerge = $columnas[6] . $filaData - 1;
+        }
+        $i++;
+
+        if ($value['id'] != $idAnterior) {
+            $celdaFinMerge = $columnas[0] . ($filaData - 1);
+            $celdaFinTotalMerge = $columnas[6] . ($filaData - 1);
             //echo $celdaIniMerge . ':' . $celdaFinMerge;
             UtilExcelPHP::mergeCeldas($objActSheet, $celdaIniMerge, $celdaFinMerge);
             UtilExcelPHP::mergeCeldas($objActSheet, $celdaTotalIniMerge, $celdaFinTotalMerge);
             //UtilExcelPHP::fondoCelda2($objActSheet, $celdaTotalIniMerge, '003366');
-
             $idAnterior = $value['id'];
             $celdaIniMerge = $columnas[0] . $filaData;
             $celdaTotalIniMerge = $columnas[6] . $filaData;
@@ -118,7 +120,6 @@ if (isset($_POST['btn-reporte'])) {
         }
 
         //echo $celdaIniMerge;
-        $i++;
     }
 
     //Establecer la anchura

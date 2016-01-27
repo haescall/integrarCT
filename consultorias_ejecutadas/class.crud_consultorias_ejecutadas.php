@@ -85,7 +85,7 @@ class crud_consultorias_ejecutadas {
                     . "where a.id = b.codigo_consultor and c.id = d.codigo_cliente "
                     . "and b.codigo_consultoria = d.id and DATE_FORMAT(b.fecha ,'%Y-%m-%d') "
                     . "between STR_TO_DATE('" . $fechaIni . "','%Y-%m-%d') "
-                    . "and STR_TO_DATE('" . $fechaFin . "','%Y-%m-%d') order by b.fecha;");
+                    . "and STR_TO_DATE('" . $fechaFin . "','%Y-%m-%d') order by a.id, b.fecha;");
             //$stmt = $this->db->prepare("SELECT * FROM consultorias_ejecutadas;");
             $stmt->execute();
             $lista = array();

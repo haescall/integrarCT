@@ -20,12 +20,12 @@ function consultoresXConsultoria(id_control) {
     nombreConsultoria = $("#" + id_control).attr("data-nombre");
     codigoProceso = $("#" + id_control).attr("data-proceso");
     $("#titulo_asig").html("Lista y Asignación de Consultores (" + nombreConsultoria + ")");
-    
+
     $.getJSON("/integrarCT/consultorias_consultores/consultores_x_consultoria_ajax.php",
             {
                 consultoria_id: consultoria_id
             },
-    mostrarConsultoresXConsultoria);
+            mostrarConsultoresXConsultoria);
 }
 
 function mostrarConsultoresXConsultoria(data) {
@@ -33,16 +33,26 @@ function mostrarConsultoresXConsultoria(data) {
     var filas = "";
     for (var i = 0; i < data.length; i++) {
         filas += "<tr><td>" + data[i].id_consultor + "</td><td>" + data[i].nombres + "</td>" +
-                "<td>" + data[i].cargo + " </td><td>" + data[i].valor_hora_consultoria + " </td>" +
+                "<td>" + data[i].cargo + " </td><td>" +
+                "<input type=\"text\" name=\"valor_hora_consultoria\" id=\"valor_hora_consultoria\"" +
+                " size=\"4\" value=\"" + data[i].valor_hora_consultoria + "\" /></td>" +
                 "<td>" + data[i].estado_consultor + " </td>";
 
         //alert("El valor de si tiene ejecuciones es : " + data[i].ejecuto);
+
+        filas += "<td align=\"center\"><a href=\"#\" data-id-consecutivo=\"" +
+                data[i].id_consecutivo + "\" data-id-consultoria=\"" +
+                consultoria_id + "\" class=\"dlg_editar_valor_hora_consultoria\" " +
+                "data-id-control=\"" + id_control + "\" title=\"Editar Valor Hora\">" +
+                "<i class=\"glyphicon glyphicon-edit\"></i></a></td>";
+
+
         if (data[i].ejecuto > 0) {
             filas += "<td align=\"center\"><a href=\"#\" data-id-consecutivo=\"" +
                     data[i].id_consecutivo + "\" data-id-consultoria=\"" +
                     consultoria_id + "\" class=\"dlg_inactivar_consultor\" " +
                     "data-id-control=\"" + id_control + "\" title=\"Inactivar consultor\">" +
-                    "<i class=\"glyphicon glyphicon-edit\"></i></a></td></tr>";
+                    "<i class=\"glyphicon glyphicon-off\"></i></a></td></tr>";
         } else {
             filas += "<td align=\"center\"><a href=\"#\" data-id-consecutivo=\"" +
                     data[i].id_consecutivo + "\" data-id-consultoria=\"" +
@@ -58,6 +68,7 @@ function mostrarConsultoresXConsultoria(data) {
     $("#consultores").html(filas);
     $(".dlg_borrar_consultor").click(borrarConsultorXConsultoria);
     $(".dlg_inactivar_consultor").click(inactivarConsultorXConsultoria);
+    $(".dlg_editar_valor_hora_consultoria").click(editValorHoraConsultorXConsultoria);
     listaConsultoresDispPorConsultoria();
 }
 
@@ -67,7 +78,7 @@ function listaConsultoresDispPorConsultoria() {
             {
                 consultoria_id: consultoria_id
             },
-    getConsultoresDispPorConsultoria);
+            getConsultoresDispPorConsultoria);
 }
 
 function getConsultoresDispPorConsultoria(data) {

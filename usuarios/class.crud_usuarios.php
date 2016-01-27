@@ -98,14 +98,14 @@ class crud_usuarios {
         }
     }
 
-     public function deleteUsuario($id, $email) {
+    public function deleteUsuario($id, $email) {
         $stmt = $this->db->prepare("DELETE FROM users WHERE id=:id AND email=:email");
         $stmt->bindparam(":id", $id);
         $stmt->bindparam(":email", $email);
         $stmt->execute();
         return true;
     }
-    
+
     public function delete($id) {
         $stmt = $this->db->prepare("DELETE FROM users WHERE id=:id");
         $stmt->bindparam(":id", $id);
@@ -124,6 +124,17 @@ class crud_usuarios {
             return false;
         }
         return true;
+    }
+
+    public function getPass($email) {
+        try {
+            $stmt = $this->db->prepare("SELECT password FROM users WHERE email=:email");
+            $stmt->execute(array(":email" => $email));
+            $editRow = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $editRow;
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
     }
 
     /* paging */

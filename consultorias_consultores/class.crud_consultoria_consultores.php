@@ -147,6 +147,20 @@ class crud_consultoria_consultores {
         }
     }
 
+    public function editarValorHoraConsultorConsultoria($idConsecutivo, $valorHoraConsultoria) {
+        try {
+            $stmt = $this->db->prepare("UPDATE consultoria_consultor SET "
+                    . "valor_hora_consultoria =:valorHoraConsultoria WHERE id=:idConsecutivo");
+            $stmt->bindparam(":valorHoraConsultoria", $valorHoraConsultoria);
+            $stmt->bindparam(":idConsecutivo", $idConsecutivo);
+            $stmt->execute();
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
     public function getConsultoresDisponiblesXConsultoria($idConsultoria) {
         try {
             $stmt = $this->db->prepare("SELECT a.id, concat(a.nombres, ' ',a.apellidos) nombres, "
@@ -248,30 +262,31 @@ class crud_consultoria_consultores {
 
         if ($total_no_of_records > 0) {
             ?><ul class="pagination"><?php
-                $total_no_of_pages = ceil($total_no_of_records / $records_per_page);
-                $current_page = 1;
-                if (isset($_GET["page_no"])) {
-                    $current_page = $_GET["page_no"];
+            $total_no_of_pages = ceil($total_no_of_records / $records_per_page);
+            $current_page = 1;
+            if (isset($_GET["page_no"])) {
+                $current_page = $_GET["page_no"];
+            }
+            if ($current_page != 1) {
+                $previous = $current_page - 1;
+                echo "<li><a href='" . $self . "?page_no=1'>Primero</a></li>";
+                echo "<li><a href='" . $self . "?page_no=" . $previous . "'>Anterior</a></li>";
+            }
+            for ($i = 1; $i <= $total_no_of_pages; $i++) {
+                if ($i == $current_page) {
+                    echo "<li><a href='" . $self . "?page_no=" . $i . "' style='color:red;'>" . $i . "</a></li>";
+                } else {
+                    echo "<li><a href='" . $self . "?page_no=" . $i . "'>" . $i . "</a></li>";
                 }
-                if ($current_page != 1) {
-                    $previous = $current_page - 1;
-                    echo "<li><a href='" . $self . "?page_no=1'>Primero</a></li>";
-                    echo "<li><a href='" . $self . "?page_no=" . $previous . "'>Anterior</a></li>";
-                }
-                for ($i = 1; $i <= $total_no_of_pages; $i++) {
-                    if ($i == $current_page) {
-                        echo "<li><a href='" . $self . "?page_no=" . $i . "' style='color:red;'>" . $i . "</a></li>";
-                    } else {
-                        echo "<li><a href='" . $self . "?page_no=" . $i . "'>" . $i . "</a></li>";
-                    }
-                }
-                if ($current_page != $total_no_of_pages) {
-                    $next = $current_page + 1;
-                    echo "<li><a href='" . $self . "?page_no=" . $next . "'>Siguiente</a></li>";
-                    echo "<li><a href='" . $self . "?page_no=" . $total_no_of_pages . "'>Último</a></li>";
-                }
-                ?></ul><?php
+            }
+            if ($current_page != $total_no_of_pages) {
+                $next = $current_page + 1;
+                echo "<li><a href='" . $self . "?page_no=" . $next . "'>Siguiente</a></li>";
+                echo "<li><a href='" . $self . "?page_no=" . $total_no_of_pages . "'>Último</a></li>";
+            }
+            ?></ul><?php
+            }
         }
-    }
 
-}
+    }
+    

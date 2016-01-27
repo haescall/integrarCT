@@ -71,7 +71,7 @@ include_once 'header.php';
                         <th>Cargo</th>
                         <th>Valor Hora</th>
                         <th>Estado</th>
-                        <th>Acción</th>
+                        <th colspan="2">Acción</th>
                     </tr>
                     <tbody id="consultores">
                     </tbody>

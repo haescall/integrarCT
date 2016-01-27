@@ -19,6 +19,7 @@ require_once '../principal/seguridadPHP.php';
         <script src="../resources/js/presupuestar_x_consultoria.js"></script>
         <script src="../resources/js/borrar_presupuesto_x_consultoria.js"></script>
         <script src="../resources/js/adicionar_presupuesto_a_consultoria.js"></script>
+        <script src="../resources/js/editar_valor_hora_consultor_consultoria.js"></script>
 
         <!-- Load jQuery and bootstrap datepicker scripts -->
         <script src="../bootstrap/js/jquery.min.js"></script>

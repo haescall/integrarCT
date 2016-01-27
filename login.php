@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<?php
+include_once 'dbconfig.php';
+if (isset($_POST['btn-recordar'])) {
+    echo '<script language="javascript">alert("Hola");</script>';
+    if (isset($_POST['email'])) {
+        $email = $_POST['email'];
+        $pass = $crud_usuario->getPass($email);
+        //echo '<script language="javascript">alert("'.$pass['password'].'");</script>'; 
+        echo $pass['password'];
+    }
+}
+?>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -9,7 +21,20 @@
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+         <!-- script references -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="./resources/js/funciones_comunes.js"></script>
+        <script type="text/javascript" src="./resources/js/recordar_password.js"></script>
+        <script type="text/javascript">
+            // When the document is ready
+            $(document).ready(function () {
+
+                $('#remember').click(recordarPassword);
+
+            });
+        </script>
+
 
         <!--[if lt IE 9]>
             <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -38,7 +63,7 @@
                               action="principal/acceso.php" name="frm_ingreso">
                             <div class="form-group">
                                 <input type="text" class="form-control input-lg" required="true"
-                                       placeholder="Email" name = "email">
+                                       placeholder="Email" id="email" name="email">
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control input-lg" required="true"
@@ -47,19 +72,21 @@
                             <div class="form-group">
                                 <button class="btn btn-primary btn-lg btn-block">Conectar</button>              
                             </div>
+                            <div class="form-group">
+                                <button type="button" id="remember" class="btn btn-primary btn-lg btn-block" 
+                                        name="btn-recordar">
+                                    Recordar Contraseña
+                            </div>
                         </form>
                         <!-- FIN FORMULARIO -->
 
                     </div>
 
                     <div class="modal-footer">
-                        <div class="col-md-12"> </div>	
+                        <div id="msg" class="col-md-12"> </div>	
                     </div>
                 </div>
             </div>
         </div>
-        <!-- script references -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
     </body>
 </html>

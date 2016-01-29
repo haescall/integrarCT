@@ -1,19 +1,4 @@
 <!DOCTYPE html>
-<?php
-include_once 'dbconfig.php';
-/* if (isset($_POST['btn-recordar'])) {
-  echo '<script language="javascript">alert("Hola");</script>';
-  $email = '<script language="javascript">document.write($("#email").val());</script>';
-  $pass = $crud_usuario->getPass($email);
-
-  /* if (isset($_POST['email'])) {
-  $email = $_POST['email'];
-  $pass = $crud_usuario->getPass($email);
-  //echo '<script language="javascript">alert("'.$pass['password'].'");</script>';
-  echo $pass['password'];
-  }
-  } */
-?>
 <html lang="en">
     <head>
         <meta http-equiv="content-type" content="text/html; charset=UTF-8">

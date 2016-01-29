@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <?php
 include_once 'dbconfig.php';
-if (isset($_POST['btn-recordar'])) {
-    echo '<script language="javascript">alert("Hola");</script>';
-    if (isset($_POST['email'])) {
-        $email = $_POST['email'];
-        $pass = $crud_usuario->getPass($email);
-        //echo '<script language="javascript">alert("'.$pass['password'].'");</script>'; 
-        echo $pass['password'];
-    }
-}
+/* if (isset($_POST['btn-recordar'])) {
+  echo '<script language="javascript">alert("Hola");</script>';
+  $email = '<script language="javascript">document.write($("#email").val());</script>';
+  $pass = $crud_usuario->getPass($email);
+
+  /* if (isset($_POST['email'])) {
+  $email = $_POST['email'];
+  $pass = $crud_usuario->getPass($email);
+  //echo '<script language="javascript">alert("'.$pass['password'].'");</script>';
+  echo $pass['password'];
+  }
+  } */
 ?>
 <html lang="en">
     <head>
@@ -21,7 +24,7 @@ if (isset($_POST['btn-recordar'])) {
         <meta name="generator" content="Bootply" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-         <!-- script references -->
+        <!-- script references -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="./resources/js/funciones_comunes.js"></script>
@@ -30,7 +33,12 @@ if (isset($_POST['btn-recordar'])) {
             // When the document is ready
             $(document).ready(function () {
 
-                $('#remember').click(recordarPassword);
+                //$('#remember').click(recordarPassword);
+
+                $("#email").focusout(function () {
+                    $("#emailPass").attr("value", $("#email").val());
+                    //alert("el valor del email pass es :" + $("#emailPass").val());
+                });
 
             });
         </script>
@@ -72,16 +80,25 @@ if (isset($_POST['btn-recordar'])) {
                             <div class="form-group">
                                 <button class="btn btn-primary btn-lg btn-block">Conectar</button>              
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <button type="button" id="remember" class="btn btn-primary btn-lg btn-block" 
                                         name="btn-recordar">
                                     Recordar Contraseña
-                            </div>
+                            </div>-->
                         </form>
                         <!-- FIN FORMULARIO -->
 
+                        <form class="form col-md-12 center-block" method="post" 
+                              action="usuarios/recordar_password.php">
+                            <input type="hidden" class="form-control input-lg" 
+                                   id="emailPass" name="emailPass"/>
+                            <div class="form-group">
+                                <input type="submit" id="remember" class="btn btn-primary btn-lg btn-block" 
+                                       name="btn-recordar" value="Recordar Contraseña">
+                                    
+                            </div>
+                        </form>
                     </div>
-
                     <div class="modal-footer">
                         <div id="msg" class="col-md-12"> </div>	
                     </div>

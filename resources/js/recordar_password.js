@@ -6,19 +6,35 @@
 
 function recordarPassword() {
     email = $("#email").val();
+    //alert("el email es : " + email);
 
-    alert("el email es : " + email);
+    $.ajax({
+        url: '/integrarCT/usuarios/recordar_password_ajax.php',
+        type: 'POST',
+        async: true,
+        data: 'email=' + email,
+        complete: function (jqXHR, textStatus) {
+            alert("Exito");
+        }
+        /*,
+         success: procesaRespuesta,
+         error: muestraError*/
+    });
+    /*$.getJSON("/integrarCT/usuarios/recordar_password_ajax.php",
+     {
+     email: email
+     },
+     procesaRespuesta);*/
+}
 
-    $.getJSON("/integrarCT/usuarios/recordar_password_ajax.php",
-            {
-                email: email
-            },
-            getPasswordUsuario);
+function procesaRespuesta(data) {
+    //alert(data);
+    //alert(data.password);
+    alert(data.mensaje);
+    //$("#valor").attr("value",data.valor_hora_consultoria * $("#horas_laboradas").val());
 }
 
 
-function getPasswordUsuario(data) {
-    //alert(data);
-    alert(data.password);
-    //$("#valor").attr("value",data.valor_hora_consultoria * $("#horas_laboradas").val());
+function muestraError() {
+
 }
